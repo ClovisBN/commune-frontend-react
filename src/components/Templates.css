@@ -1,0 +1,31 @@
+.template-section {
+  padding: 20px;
+}
+
+.template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.template-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.template-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: calc(33.333% - 20px);
+}
+
+.template-title {
+  font-weight: bold;
+}
+
+.template-description {
+  color: #666;
+}

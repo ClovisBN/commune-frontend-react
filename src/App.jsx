@@ -1,13 +1,17 @@
-import "./App.css";
 import React from "react";
-import Form from "./components/Form";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Templates from "./components/Templates";
+import QuestionUI from "./components/QuestionUI";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Form />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Templates />} />
+        <Route path="/documents/:id" element={<QuestionUI />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
