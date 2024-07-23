@@ -1,5 +1,5 @@
 import React from "react";
-import QuestionHeader from "./QuestionHeader";
+import SelectQuestionType from "./SelectQuestionType";
 import QuestionFooter from "./QuestionFooter";
 import "./QuestionUI.css";
 
@@ -9,6 +9,7 @@ const UnifiedQuestion = ({
   onDelete,
   onDuplicate,
   onToggleRequired,
+  isSelected,
 }) => {
   const handleTextChange = (text) => {
     onChange({ ...question, text });
@@ -35,12 +36,18 @@ const UnifiedQuestion = ({
 
   return (
     <div className="question-container">
-      <QuestionHeader
-        text={question.text}
-        type={question.type}
-        onTextChange={handleTextChange}
-        onTypeChange={handleTypeChange}
-      />
+      <div className="question-header">
+        <input
+          type="text"
+          value={question.text}
+          onChange={(e) => handleTextChange(e.target.value)}
+          placeholder="Enter your question"
+        />
+        <SelectQuestionType
+          currentType={question.type}
+          onTypeChange={handleTypeChange}
+        />
+      </div>
       {question.type === "multiple-choice" && (
         <div className="multiple-choice-question">
           {question.options.map((option, index) => (
@@ -96,12 +103,14 @@ const UnifiedQuestion = ({
           <button onClick={addOption}>Add Option</button>
         </div>
       )}
-      <QuestionFooter
-        onDelete={onDelete}
-        onDuplicate={onDuplicate}
-        onToggleRequired={onToggleRequired}
-        isRequired={question.isRequired}
-      />
+      {isSelected && (
+        <QuestionFooter
+          onDelete={onDelete}
+          onDuplicate={onDuplicate}
+          onToggleRequired={onToggleRequired}
+          isRequired={question.isRequired}
+        />
+      )}
     </div>
   );
 };

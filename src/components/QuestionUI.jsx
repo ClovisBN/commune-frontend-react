@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import api from "./Api"; // Utilisez api pour les requêtes
+import { useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import UnifiedQuestion from "./UnifiedQuestion";
 import "./QuestionUI.css";
 
 const QuestionUI = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [doc, setDoc] = useState({
     name: "untitled-form",
     description: "Add Description",
@@ -22,9 +23,7 @@ const QuestionUI = () => {
         if (savedDoc) {
           setDoc(JSON.parse(savedDoc));
         } else {
-          const response = await axios.get(
-            `http://localhost:8000/api/documents/${id}`
-          );
+          const response = await api.get(`/documents/${id}`);
           setDoc(response.data);
         }
 
@@ -34,12 +33,17 @@ const QuestionUI = () => {
           setSelectedQuestionId(savedSelectedQuestionId);
         }
       } catch (error) {
-        console.error("Error fetching document:", error);
+        if (error.message === "Token expired") {
+          console.log("Your token expired");
+          navigate("/login");
+        } else {
+          console.error("Error fetching document:", error);
+        }
       }
     };
 
     fetchDocument();
-  }, [id]);
+  }, [id, navigate]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -55,35 +59,49 @@ const QuestionUI = () => {
   }, [id, doc, selectedQuestionId]);
 
   const addQuestion = () => {
-    const newQuestion = {
-      id: uuidv4(),
-      type: "multiple-choice",
-      text: "",
-      options: [""],
-      isRequired: false,
-    };
-
-    setDoc((prevState) => {
-      const selectedQuestionIndex = prevState.questions.findIndex(
-        (q) => q.id === selectedQuestionId
-      );
-      const newQuestions = [...prevState.questions];
-      newQuestions.splice(selectedQuestionIndex + 1, 0, newQuestion);
-      return {
-        ...prevState,
-        questions: newQuestions,
+    try {
+      const newQuestion = {
+        id: uuidv4(),
+        type: "multiple-choice",
+        text: "",
+        options: [""],
+        isRequired: false,
       };
-    });
 
-    setSelectedQuestionId(newQuestion.id); // Select the new question
+      setDoc((prevState) => {
+        const selectedQuestionIndex = prevState.questions.findIndex(
+          (q) => q.id === selectedQuestionId
+        );
+        const newQuestions = [...prevState.questions];
+        newQuestions.splice(selectedQuestionIndex + 1, 0, newQuestion);
+        return {
+          ...prevState,
+          questions: newQuestions,
+        };
+      });
+
+      setSelectedQuestionId(newQuestion.id);
+    } catch (error) {
+      if (error.message === "Token expired") {
+        console.log("Your token expired");
+        navigate("/login");
+      } else {
+        console.error("Error adding question:", error);
+      }
+    }
   };
 
   const saveDocument = async () => {
     try {
-      await axios.put(`http://localhost:8000/api/documents/${id}`, doc);
+      await api.put(`/documents/${id}`, doc);
       localStorage.removeItem(`document-${id}`);
     } catch (error) {
-      console.error("Error saving document:", error);
+      if (error.message === "Token expired") {
+        console.log("Your token expired");
+        navigate("/login");
+      } else {
+        console.error("Error saving document:", error);
+      }
     }
   };
 
@@ -109,30 +127,44 @@ const QuestionUI = () => {
   };
 
   const handleDeleteQuestion = (questionId) => {
-    setDoc((prevState) => ({
-      ...prevState,
-      questions: prevState.questions.filter((q) => q.id !== questionId),
-    }));
-    setSelectedQuestionId(null); // Clear selection if question is deleted
+    try {
+      setDoc((prevState) => ({
+        ...prevState,
+        questions: prevState.questions.filter((q) => q.id !== questionId),
+      }));
+    } catch (error) {
+      if (error.message === "Token expired") {
+        console.log("Your token expired");
+        navigate("/login");
+      } else {
+        console.error("Error deleting question:", error);
+      }
+    }
   };
 
   const handleDuplicateQuestion = (question) => {
-    const newQuestion = { ...question, id: uuidv4() };
-    setDoc((prevState) => {
-      const questionIndex = prevState.questions.findIndex(
-        (q) => q.id === question.id
-      );
-      const newQuestions = [...prevState.questions];
-      newQuestions.splice(questionIndex + 1, 0, newQuestion);
-      return {
-        ...prevState,
-        questions: newQuestions,
-      };
-    });
-
-    setTimeout(() => {
-      setSelectedQuestionId(newQuestion.id); // Select the new question after the state update
-    }, 0);
+    try {
+      const newQuestion = { ...question, id: uuidv4() };
+      setDoc((prevState) => {
+        const questionIndex = prevState.questions.findIndex(
+          (q) => q.id === question.id
+        );
+        const newQuestions = [...prevState.questions];
+        newQuestions.splice(questionIndex + 1, 0, newQuestion);
+        return {
+          ...prevState,
+          questions: newQuestions,
+        };
+      });
+      setTimeout(() => setSelectedQuestionId(newQuestion.id), 0);
+    } catch (error) {
+      if (error.message === "Token expired") {
+        console.log("Your token expired");
+        navigate("/login");
+      } else {
+        console.error("Error duplicating question:", error);
+      }
+    }
   };
 
   const handleToggleRequired = (question) => {
@@ -180,6 +212,7 @@ const QuestionUI = () => {
                 onDelete={() => handleDeleteQuestion(question.id)}
                 onDuplicate={() => handleDuplicateQuestion(question)}
                 onToggleRequired={() => handleToggleRequired(question)}
+                isSelected={selectedQuestionId === question.id}
               />
             </div>
           ))}

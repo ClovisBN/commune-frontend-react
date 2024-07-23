@@ -1,17 +1,23 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Templates from "./components/Templates";
-import QuestionUI from "./components/QuestionUI";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import AuthenticatedApp from "./components/AuthenticatedApp";
 
-const App = () => {
+const AppContent = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Templates />} />
-        <Route path="/documents/:id" element={<QuestionUI />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/*" element={<AuthenticatedApp />} />
+    </Routes>
   );
 };
+
+const App = () => (
+  <Router>
+    <AppContent />
+  </Router>
+);
 
 export default App;

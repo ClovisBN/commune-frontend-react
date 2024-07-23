@@ -1,4 +1,5 @@
 import React from "react";
+import { FaTrash, FaCopy, FaExclamationCircle } from "react-icons/fa";
 
 const QuestionFooter = ({
   onDelete,
@@ -8,10 +9,14 @@ const QuestionFooter = ({
 }) => {
   return (
     <div className="question-footer">
-      <button onClick={onDelete}>Delete</button>
-      <button onClick={onDuplicate}>Duplicate</button>
-      <button onClick={onToggleRequired}>
-        {isRequired ? "Unmark Required" : "Mark Required"}
+      <button onClick={onDelete} title="Delete Question">
+        <FaTrash />
+      </button>
+      <button onClick={onDuplicate} title="Duplicate Question">
+        <FaCopy />
+      </button>
+      <button onClick={onToggleRequired} title="Toggle Required">
+        <FaExclamationCircle color={isRequired ? "red" : "gray"} />
       </button>
     </div>
   );
