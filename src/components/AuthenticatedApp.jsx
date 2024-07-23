@@ -5,6 +5,7 @@ import AdminLayout from "./Pages/Admin/AdminLayout";
 import PrivateRoute from "./PrivateRoute";
 import Templates from "./Templates";
 import QuestionUI from "./QuestionUI";
+import DocumentPreviewPage from "./DocumentPreviewPage";
 
 const AuthenticatedApp = () => {
   return (
@@ -13,6 +14,10 @@ const AuthenticatedApp = () => {
         <Route element={<UserLayout />}>
           <Route path="/documents" element={<Templates />} />
           <Route path="/documents/:id" element={<QuestionUI />} />
+          <Route
+            path="/documents/preview/:id"
+            element={<DocumentPreviewPage />}
+          />
         </Route>
       </Route>
       <Route element={<PrivateRoute allowedRoles={["admin"]} />}>

@@ -1,5 +1,5 @@
 import React from "react";
-import SelectQuestionType from "./SelectQuestionType";
+import QuestionHeader from "./QuestionHeader";
 import QuestionFooter from "./QuestionFooter";
 import "./QuestionUI.css";
 
@@ -35,19 +35,13 @@ const UnifiedQuestion = ({
   };
 
   return (
-    <div className="question-container">
-      <div className="question-header">
-        <input
-          type="text"
-          value={question.text}
-          onChange={(e) => handleTextChange(e.target.value)}
-          placeholder="Enter your question"
-        />
-        <SelectQuestionType
-          currentType={question.type}
-          onTypeChange={handleTypeChange}
-        />
-      </div>
+    <>
+      <QuestionHeader
+        text={question.text}
+        type={question.type}
+        onTextChange={handleTextChange}
+        onTypeChange={handleTypeChange}
+      />
       {question.type === "multiple-choice" && (
         <div className="multiple-choice-question">
           {question.options.map((option, index) => (
@@ -111,7 +105,7 @@ const UnifiedQuestion = ({
           isRequired={question.isRequired}
         />
       )}
-    </div>
+    </>
   );
 };
 

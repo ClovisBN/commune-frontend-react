@@ -120,13 +120,6 @@ button {
   cursor: pointer;
 }
 
-.question-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 .add-question-button {
   position: absolute;
   right: -150px;
@@ -149,4 +142,59 @@ button {
   cursor: pointer;
   font-size: 20px;
   color: #000; /* Change this to any color you want */
+}
+
+/* ///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+/////////////////////////////////////// */
+
+/* Ajoutez ou modifiez les styles existants selon vos besoins */
+.question-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.question-header input {
+  width: 100%;
+  font-size: 16px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.multiple-choice-question .option,
+.checkbox-question .option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.multiple-choice-question .option input,
+.checkbox-question .option input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.short-answer-question input,
+.date-question input,
+.time-question input {
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.cnt-btn-question-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.question-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.drag-end-drop-header {
+  margin: 0 auto;
 }

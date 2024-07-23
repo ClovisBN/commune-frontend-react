@@ -91,10 +91,13 @@ const QuestionUI = () => {
     }
   };
 
-  const saveDocument = async () => {
+  const saveDocument = async (redirectToPreview = false) => {
     try {
       await api.put(`/documents/${id}`, doc);
       localStorage.removeItem(`document-${id}`);
+      if (redirectToPreview) {
+        navigate(`/documents/preview/${id}`);
+      }
     } catch (error) {
       if (error.message === "Token expired") {
         console.log("Your token expired");
@@ -128,10 +131,31 @@ const QuestionUI = () => {
 
   const handleDeleteQuestion = (questionId) => {
     try {
-      setDoc((prevState) => ({
-        ...prevState,
-        questions: prevState.questions.filter((q) => q.id !== questionId),
-      }));
+      setDoc((prevState) => {
+        const newQuestions = prevState.questions.filter(
+          (q) => q.id !== questionId
+        );
+        let newSelectedQuestionId = null;
+
+        if (newQuestions.length > 0) {
+          const deletedQuestionIndex = prevState.questions.findIndex(
+            (q) => q.id === questionId
+          );
+          if (deletedQuestionIndex === 0) {
+            newSelectedQuestionId = newQuestions[0].id;
+          } else {
+            newSelectedQuestionId =
+              newQuestions[Math.max(0, deletedQuestionIndex - 1)].id;
+          }
+        }
+
+        setSelectedQuestionId(newSelectedQuestionId);
+
+        return {
+          ...prevState,
+          questions: newQuestions,
+        };
+      });
     } catch (error) {
       if (error.message === "Token expired") {
         console.log("Your token expired");
@@ -225,7 +249,10 @@ const QuestionUI = () => {
           Add Question
         </button>
       </div>
-      <button onClick={saveDocument}>Save</button>
+      <button onClick={() => saveDocument(false)}>Save</button>
+      <button onClick={() => saveDocument(true)} className="preview-button">
+        Preview Document
+      </button>
     </div>
   );
 };
