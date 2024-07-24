@@ -1,199 +1,147 @@
-import React, { useState, useEffect, useRef } from "react";
-import api from "./Api"; // Utilisez api pour les requêtes
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import UnifiedQuestion from "./UnifiedQuestion";
+import { DndContext, closestCenter, DragOverlay } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import {
+  useSensor,
+  useSensors,
+  PointerSensor,
+  KeyboardSensor,
+} from "@dnd-kit/core";
+import {
+  restrictToVerticalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers";
+import SortableQuestion from "./SortableQuestion";
+import useDocument from "./useDocument";
 import "./QuestionUI.css";
 
 const QuestionUI = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [doc, setDoc] = useState({
-    name: "untitled-form",
-    description: "Add Description",
-    questions: [],
-  });
-  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const addButtonRef = useRef(null);
+  const [activeId, setActiveId] = useState(null);
+  const {
+    doc,
+    setDoc,
+    selectedQuestionId,
+    setSelectedQuestionId,
+    saveDocument,
+  } = useDocument(id, navigate);
 
-  useEffect(() => {
-    const fetchDocument = async () => {
-      try {
-        const savedDoc = localStorage.getItem(`document-${id}`);
-        if (savedDoc) {
-          setDoc(JSON.parse(savedDoc));
-        } else {
-          const response = await api.get(`/documents/${id}`);
-          setDoc(response.data);
-        }
-
-        const savedSelectedQuestionId =
-          localStorage.getItem("selectedQuestionId");
-        if (savedSelectedQuestionId) {
-          setSelectedQuestionId(savedSelectedQuestionId);
-        }
-      } catch (error) {
-        if (error.message === "Token expired") {
-          console.log("Your token expired");
-          navigate("/login");
-        } else {
-          console.error("Error fetching document:", error);
-        }
-      }
-    };
-
-    fetchDocument();
-  }, [id, navigate]);
-
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      localStorage.setItem(`document-${id}`, JSON.stringify(doc));
-      localStorage.setItem("selectedQuestionId", selectedQuestionId);
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [id, doc, selectedQuestionId]);
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const addQuestion = () => {
-    try {
-      const newQuestion = {
-        id: uuidv4(),
-        type: "multiple-choice",
-        text: "",
-        options: [""],
-        isRequired: false,
+    const newQuestion = {
+      id: uuidv4(),
+      type: "multiple-choice",
+      text: "",
+      options: [""],
+      isRequired: false,
+    };
+
+    setDoc((prevState) => {
+      const selectedQuestionIndex = prevState.questions.findIndex(
+        (q) => q.id === selectedQuestionId
+      );
+      const newQuestions = [...prevState.questions];
+      newQuestions.splice(selectedQuestionIndex + 1, 0, newQuestion);
+      return {
+        ...prevState,
+        questions: newQuestions,
       };
+    });
 
-      setDoc((prevState) => {
-        const selectedQuestionIndex = prevState.questions.findIndex(
-          (q) => q.id === selectedQuestionId
-        );
-        const newQuestions = [...prevState.questions];
-        newQuestions.splice(selectedQuestionIndex + 1, 0, newQuestion);
-        return {
-          ...prevState,
-          questions: newQuestions,
-        };
-      });
-
-      setSelectedQuestionId(newQuestion.id);
-    } catch (error) {
-      if (error.message === "Token expired") {
-        console.log("Your token expired");
-        navigate("/login");
-      } else {
-        console.error("Error adding question:", error);
-      }
-    }
-  };
-
-  const saveDocument = async (redirectToPreview = false) => {
-    try {
-      await api.put(`/documents/${id}`, doc);
-      localStorage.removeItem(`document-${id}`);
-      if (redirectToPreview) {
-        navigate(`/documents/preview/${id}`);
-      }
-    } catch (error) {
-      if (error.message === "Token expired") {
-        console.log("Your token expired");
-        navigate("/login");
-      } else {
-        console.error("Error saving document:", error);
-      }
-    }
-  };
-
-  const handleQuestionChange = (updatedQuestion) => {
-    setDoc((prevState) => ({
-      ...prevState,
-      questions: prevState.questions.map((q) =>
-        q.id === updatedQuestion.id ? updatedQuestion : q
-      ),
-    }));
-  };
-
-  const handleNameChange = (e) => {
-    setDoc({ ...doc, name: e.target.value });
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDoc({ ...doc, description: e.target.value });
-  };
-
-  const handleQuestionClick = (questionId) => {
-    setSelectedQuestionId(questionId);
+    setSelectedQuestionId(newQuestion.id);
   };
 
   const handleDeleteQuestion = (questionId) => {
-    try {
-      setDoc((prevState) => {
-        const newQuestions = prevState.questions.filter(
-          (q) => q.id !== questionId
+    setDoc((prevState) => {
+      const newQuestions = prevState.questions.filter(
+        (q) => q.id !== questionId
+      );
+      let newSelectedQuestionId = null;
+
+      if (newQuestions.length > 0) {
+        const deletedQuestionIndex = prevState.questions.findIndex(
+          (q) => q.id === questionId
         );
-        let newSelectedQuestionId = null;
-
-        if (newQuestions.length > 0) {
-          const deletedQuestionIndex = prevState.questions.findIndex(
-            (q) => q.id === questionId
-          );
-          if (deletedQuestionIndex === 0) {
-            newSelectedQuestionId = newQuestions[0].id;
-          } else {
-            newSelectedQuestionId =
-              newQuestions[Math.max(0, deletedQuestionIndex - 1)].id;
-          }
+        if (deletedQuestionIndex === 0) {
+          newSelectedQuestionId = newQuestions[0].id;
+        } else {
+          newSelectedQuestionId = newQuestions[deletedQuestionIndex - 1].id;
         }
-
-        setSelectedQuestionId(newSelectedQuestionId);
-
-        return {
-          ...prevState,
-          questions: newQuestions,
-        };
-      });
-    } catch (error) {
-      if (error.message === "Token expired") {
-        console.log("Your token expired");
-        navigate("/login");
-      } else {
-        console.error("Error deleting question:", error);
       }
-    }
+
+      setSelectedQuestionId(newSelectedQuestionId);
+
+      return {
+        ...prevState,
+        questions: newQuestions,
+      };
+    });
   };
 
   const handleDuplicateQuestion = (question) => {
-    try {
-      const newQuestion = { ...question, id: uuidv4() };
+    const newQuestion = { ...question, id: uuidv4() };
+    setDoc((prevState) => {
+      const questionIndex = prevState.questions.findIndex(
+        (q) => q.id === question.id
+      );
+      const newQuestions = [...prevState.questions];
+      newQuestions.splice(questionIndex + 1, 0, newQuestion);
+      return {
+        ...prevState,
+        questions: newQuestions,
+      };
+    });
+
+    setSelectedQuestionId(newQuestion.id);
+  };
+
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id);
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    setActiveId(null);
+
+    if (active.id !== over.id) {
       setDoc((prevState) => {
-        const questionIndex = prevState.questions.findIndex(
-          (q) => q.id === question.id
+        const oldIndex = prevState.questions.findIndex(
+          (q) => q.id === active.id
         );
-        const newQuestions = [...prevState.questions];
-        newQuestions.splice(questionIndex + 1, 0, newQuestion);
+        const newIndex = prevState.questions.findIndex((q) => q.id === over.id);
+
+        const newQuestions = arrayMove(prevState.questions, oldIndex, newIndex);
+
         return {
           ...prevState,
           questions: newQuestions,
         };
       });
-      setTimeout(() => setSelectedQuestionId(newQuestion.id), 0);
-    } catch (error) {
-      if (error.message === "Token expired") {
-        console.log("Your token expired");
-        navigate("/login");
-      } else {
-        console.error("Error duplicating question:", error);
-      }
     }
   };
 
-  const handleToggleRequired = (question) => {
-    const updatedQuestion = { ...question, isRequired: !question.isRequired };
-    handleQuestionChange(updatedQuestion);
+  const handleDragCancel = () => {
+    setActiveId(null);
   };
 
   useEffect(() => {
@@ -211,44 +159,80 @@ const QuestionUI = () => {
       <input
         type="text"
         value={doc.name}
-        onChange={handleNameChange}
+        onChange={(e) => setDoc({ ...doc, name: e.target.value })}
         className="document-title"
       />
       <textarea
         value={doc.description}
-        onChange={handleDescriptionChange}
+        onChange={(e) => setDoc({ ...doc, description: e.target.value })}
         className="document-description"
       />
-      <div className="questions-container">
-        <div className="questions-list">
-          {doc.questions.map((question) => (
-            <div
-              key={question.id}
-              id={question.id}
-              className={`question-wrapper ${
-                selectedQuestionId === question.id ? "selected" : ""
-              }`}
-              onClick={() => handleQuestionClick(question.id)}
-            >
-              <UnifiedQuestion
-                question={question}
-                onChange={handleQuestionChange}
-                onDelete={() => handleDeleteQuestion(question.id)}
-                onDuplicate={() => handleDuplicateQuestion(question)}
-                onToggleRequired={() => handleToggleRequired(question)}
-                isSelected={selectedQuestionId === question.id}
-              />
-            </div>
-          ))}
-        </div>
-        <button
-          ref={addButtonRef}
-          className="add-question-button"
-          onClick={addQuestion}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+        modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+      >
+        <SortableContext
+          items={doc.questions}
+          strategy={verticalListSortingStrategy}
         >
-          Add Question
-        </button>
-      </div>
+          <div className="questions-container">
+            <div className="questions-list">
+              {doc.questions.map((question) => (
+                <SortableQuestion
+                  key={question.id}
+                  question={question}
+                  selectedQuestionId={selectedQuestionId}
+                  setSelectedQuestionId={setSelectedQuestionId}
+                  setDoc={setDoc}
+                  handleDeleteQuestion={handleDeleteQuestion}
+                  handleDuplicateQuestion={handleDuplicateQuestion}
+                  onToggleRequired={() =>
+                    setDoc((prevState) => ({
+                      ...prevState,
+                      questions: prevState.questions.map((q) =>
+                        q.id === question.id
+                          ? { ...q, isRequired: !q.isRequired }
+                          : q
+                      ),
+                    }))
+                  }
+                />
+              ))}
+            </div>
+            <button
+              ref={addButtonRef}
+              className="add-question-button"
+              onClick={addQuestion}
+            >
+              Add Question
+            </button>
+          </div>
+        </SortableContext>
+        <DragOverlay>
+          {activeId ? (
+            <SortableQuestion
+              question={doc.questions.find((q) => q.id === activeId)}
+              selectedQuestionId={selectedQuestionId}
+              setSelectedQuestionId={setSelectedQuestionId}
+              setDoc={setDoc}
+              handleDeleteQuestion={handleDeleteQuestion}
+              handleDuplicateQuestion={handleDuplicateQuestion}
+              onToggleRequired={() =>
+                setDoc((prevState) => ({
+                  ...prevState,
+                  questions: prevState.questions.map((q) =>
+                    q.id === activeId ? { ...q, isRequired: !q.isRequired } : q
+                  ),
+                }))
+              }
+            />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
       <button onClick={() => saveDocument(false)}>Save</button>
       <button onClick={() => saveDocument(true)} className="preview-button">
         Preview Document

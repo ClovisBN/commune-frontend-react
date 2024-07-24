@@ -35,7 +35,7 @@ const UnifiedQuestion = ({
   };
 
   return (
-    <>
+    <div className="question-container">
       <QuestionHeader
         text={question.text}
         type={question.type}
@@ -105,7 +105,7 @@ const UnifiedQuestion = ({
           isRequired={question.isRequired}
         />
       )}
-    </>
+    </div>
   );
 };
 

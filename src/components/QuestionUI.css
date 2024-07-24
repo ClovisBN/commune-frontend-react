@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .question-container {
   border: 1px solid #ccc;
   padding: 15px;
@@ -141,15 +145,9 @@ button {
   border: none;
   cursor: pointer;
   font-size: 20px;
-  color: #000; /* Change this to any color you want */
+  color: #000;
 }
 
-/* ///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-/////////////////////////////////////// */
-
-/* Ajoutez ou modifiez les styles existants selon vos besoins */
 .question-container {
   border: 1px solid #ccc;
   padding: 10px;
@@ -197,4 +195,46 @@ button {
 
 .drag-end-drop-header {
   margin: 0 auto;
+}
+
+.document-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+}
+
+.questions-list {
+  flex: 1;
+  width: 100%;
+}
+
+.question-wrapper {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  background: #fff;
+  position: relative; /* Pour garantir que le DragOverlay soit au-dessus */
+}
+
+.question-wrapper.selected {
+  border: 2px solid red;
+  padding: 8px;
+}
+
+.add-question-button {
+  position: absolute;
+  right: -150px;
+  top: 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
