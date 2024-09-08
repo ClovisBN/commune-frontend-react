@@ -1,0 +1,54 @@
+// Couleurs
+$primary-color: rgba(25, 78, 213, 0.6); // Couleur de focus
+$secondary-color: rgba(255, 255, 255, 0.05); // Fond translucide des inputs
+$error-color: red; // Couleur des erreurs
+$hover-background: rgba(255, 255, 255, 0.2); // Hover pour les boutons et items
+$border-color: #424244; // Couleur des bordures
+$dropdown-bg: #242528; // Background du dropdown
+$item-bg: #2b2c30; // Background des items du dropdown
+$template-border-color: #ccc; // Couleur de la bordure des templates
+$template-title-color: #666; // Couleur des descriptions des templates
+$text-color: #444; // Couleur du texte
+$hover-border-color: #4285f4; // Couleur de la bordure au hover
+$date-text-color: rgba(255, 255, 255, 0.49); // Couleur du texte pour la date
+$menu-background: #ffffff; // Fond du menu
+$menu-border-color: #e2e2e2; // Couleur de la bordure du menu
+$menu-background-hover: #f2f2f2; // Couleur du fond au survol dans le menu
+$bgColor-active: #656c7640;
+$bgColor-primary: #2a2b2d;
+
+$primary-text-color: #ffffff;
+$text-fontSize-1: 20px;
+$text-fontSize-2: 15px;
+$text-fontSize-3: 12px;
+
+// Typographie
+$font-size-default: 14px; // Taille de police par défaut
+$font-size-small: 12px; // Taille de police plus petite
+$font-weight-bold: bold; // Poids de la police pour les titres
+
+// Dimensions
+$padding-small: 5px; // Padding petit
+$padding-medium: 10px; // Padding moyen
+$padding-large: 20px; // Padding large
+$padding-content: 16px 8px 14px 16px; // Padding pour le contenu de la carte
+$input-height: 32px; // Hauteur des inputs
+$dropdown-item-height: 35px; // Hauteur des items du dropdown
+$border-radius-small: 5px; // Bordure arrondie petite
+$border-radius-medium: 7px; // Bordure arrondie moyenne
+$border-radius-large: 10px; // Bordure arrondie large
+$card-margin-bottom: 45px; // Marge inférieure des cartes
+$card-margin-right: 45px; // Marge droite des cartes
+$card-width: 208px; // Largeur des cartes
+$image-height: 169px; // Hauteur de l'image
+$card-footer-height: 44px; // Hauteur du pied de la carte
+$menu-btn-size: 24px; // Taille du bouton de menu
+$border-radius: 10px;
+
+// Transitions
+$transition-default: 0.3s ease; // Transition par défaut
+$transition-cubic: 0.25s cubic-bezier(0.25, 0.3, 0.59, 1.43); // Transition cubic-bezier
+$transition-cubic-1: 0.2s cubic-bezier(0.92, 0.55, 0.61, 1);
+
+// Ombres
+$box-shadow-default: 0 0 8px rgba(25, 78, 213, 0.5); // Ombre pour les éléments focus

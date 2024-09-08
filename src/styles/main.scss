@@ -1,0 +1,53 @@
+// Import des variables globales
+@import "./variables";
+
+//----------------------------
+// Input + Variant
+//----------------------------
+@import "./input/InputDefault.scss";
+@import "./input/InputVariant1.scss";
+@import "./input/InputVariant2.scss";
+@import "./input/InputVariant3.scss";
+
+//----------------------------
+// Button
+//----------------------------
+@import "./btn/DropDown.scss";
+@import "./btn/ButtonSelect.scss";
+
+// Button Default with Variant
+@import "./btn/default/ButtonDefault.scss";
+@import "./btn/default/ButtonDefaultVariant1.scss";
+@import "./btn/default/ButtonDefaultVariant2.scss";
+@import "./btn/default/ButtonDefaultVariant3.scss";
+
+//----------------------------
+// Card
+//----------------------------
+@import "./card/Card";
+
+//----------------------------
+// NavBar
+//----------------------------
+@import "./navbar/MainSideBarUser.scss";
+@import "./navbar/NavbarSurveyEdit.scss";
+@import "./navbar/NavbarSurveyView.scss";
+//  @import "./navbar";
+
+//----------------------------
+// SurveyComponents
+//----------------------------
+@import "./surveyComponents/MultipleChoiceSurvey.scss";
+@import "./surveyComponents/WrapperQuestionSurvey.scss";
+@import "./surveyComponents/HeaderSurvey.scss";
+
+//----------------------------
+// header
+//----------------------------
+@import "./header/HeaderQuestionSurveyEdit.scss";
+@import "./header/HeaderQuestionSurveyView.scss";
+
+//----------------------------
+// footer
+//----------------------------
+@import "./footer/FooterQuestionSurveyEdit.scss";

@@ -1,24 +1,21 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import useAuth from "../hooks/useAuth";
 
 const PrivateRoute = ({ allowedRoles }) => {
-  const jwtToken = localStorage.getItem("jwt_token");
+  const { isAuthenticated, userRole, loading } = useAuth();
 
-  if (!jwtToken) {
+  if (loading) return <div>Loading...</div>; // Attendre que l'authentification soit vérifiée
+
+  if (!isAuthenticated) {
+    console.log("User is not authenticated. Redirecting to login.");
     return <Navigate to="/login" />;
   }
-
-  try {
-    const decodedToken = jwtDecode(jwtToken);
-    const userRole = decodedToken.role || "";
-
-    if (!allowedRoles.includes(userRole)) {
-      return <Navigate to="/unauthorized" />;
-    }
-  } catch (error) {
-    console.error("Token decoding failed:", error);
-    return <Navigate to="/login" />;
+  if (!allowedRoles.includes(userRole)) {
+    console.log(
+      "User does not have the required role. Redirecting to unauthorized."
+    );
+    return <Navigate to="/unauthorized" />;
   }
 
   return <Outlet />;

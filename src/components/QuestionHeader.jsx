@@ -1,20 +1,19 @@
 import React from "react";
-import { HiDotsHorizontal } from "react-icons/hi";
+// import { HiDotsHorizontal } from "react-icons/hi";
 import SelectQuestionType from "./SelectQuestionType";
-import "./QuestionUI.css"; // Assurez-vous que les styles sont inclus
+import InputField from "./InputComponents/InputField"; // Import du composant InputField
 
 const QuestionHeader = ({ text, type, onTextChange, onTypeChange }) => {
   return (
-    <div className="question-header">
-      <div className="drag-end-drop-header">
-        <HiDotsHorizontal />
-      </div>
-      <div className="cnt-btn-question-header">
-        <input
+    <div className="header-question-survey">
+      <div className="row-element-survey-header">
+        <InputField
+          name="question-survey-title"
           type="text"
           value={text}
           onChange={(e) => onTextChange(e.target.value)}
-          placeholder="Enter your question"
+          placeholder="Enter your question title"
+          variant="variant2"
         />
         <SelectQuestionType currentType={type} onTypeChange={onTypeChange} />
       </div>

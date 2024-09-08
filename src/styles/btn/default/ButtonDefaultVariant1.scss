@@ -1,0 +1,16 @@
+@import "../../variables"; // Import des variables SCSS
+
+.button-variant1 {
+  padding: 0 16px; // Ajoute un peu de padding pour l'espacement interne
+  height: 28px;
+  border: 1px solid $border-color;
+  background-color: $item-bg;
+  color: white; // Couleur de texte par défaut
+  text-align: center;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}

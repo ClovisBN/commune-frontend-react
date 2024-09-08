@@ -1,0 +1,17 @@
+@import "../variables";
+
+.header-question-survey {
+  border-top-left-radius: $border-radius - 1px;
+  border-top-right-radius: $border-radius - 1px;
+  height: 40px;
+  background-color: $bgColor-primary;
+  border-bottom: 1px solid $border-color;
+}
+
+.row-element-survey-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}

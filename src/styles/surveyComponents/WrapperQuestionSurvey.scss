@@ -1,0 +1,31 @@
+@import "../variables.scss";
+
+.question-wrapper {
+  background-color: $bgColor-primary;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  margin-bottom: 30px;
+  transition: border 0.2s;
+}
+
+.question-container {
+  border: 0.5px solid #424244;
+  border-radius: 8.5px;
+}
+
+.question-container:hover {
+  border: 0.5px solid #6a696a;
+}
+
+.question-container:focus-within {
+  border: 0.5px solid #a2a0a2;
+}
+
+// .question-wrapper.selected {
+//   box-shadow: 0px 0px 5px -2px rgb(56, 36, 200);
+
+// --color-inverse-border: #424244;
+//         --color-inverse-border-hover: #6a696a;
+//         --color-inverse-border-active: #a2a0a2;
+//         --color-inverse-border-strong: #fff;
+// }

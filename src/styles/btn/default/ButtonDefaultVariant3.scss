@@ -1,0 +1,18 @@
+@import "../../variables";
+
+.button-variant3 {
+  color: white;
+  width: 28px;
+  height: 28px;
+  margin: 0 10px 0 0;
+
+  &:hover {
+    background-color: $bgColor-active;
+    // border-color: darken($primary-color, 10%);
+  }
+}
+
+.button-variant3 button {
+  height: 16px;
+  width: 16px;
+}

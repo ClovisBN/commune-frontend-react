@@ -1,0 +1,30 @@
+@import "../variables";
+
+.input-field {
+  width: 100%;
+  height: 100%;
+}
+
+.input-container {
+  width: 100%;
+}
+
+.input-container .input-element {
+  width: 100%;
+}
+
+.input-element {
+  all: unset; /* Supprime tous les styles par défaut */
+  box-sizing: border-box;
+  resize: none; /* Empêche le redimensionnement des textarea */
+  appearance: none; /* Supprime l'apparence par défaut */
+  font-family: inherit;
+}
+
+.input-label {
+  margin-bottom: $padding-small;
+}
+
+.input-error {
+  margin-top: $padding-small;
+}

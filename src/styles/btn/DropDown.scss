@@ -1,0 +1,93 @@
+@import "../variables";
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  height: 40px;
+  width: 200px;
+}
+
+.dropdown-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: $padding-medium;
+  text-align: left;
+  position: relative;
+}
+
+.dropdown-btn:hover {
+  background-color: $hover-background;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: $dropdown-bg;
+  border: none;
+  border-radius: $border-radius-medium;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: height $transition-cubic, border 0s ease, opacity 0.3s ease;
+}
+
+.dropdown-list.show {
+  opacity: 1;
+  visibility: visible;
+  border: 1px solid $border-color;
+}
+
+.dropdown-list li {
+  position: relative;
+  list-style: none;
+}
+
+.dropdown-list li + li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background-color: $border-color; /* Séparateur entre les éléments */
+}
+
+.dropdown-item {
+  background-color: $item-bg;
+  text-align: left;
+  color: #ffffff;
+  border: none;
+  width: 100%;
+  height: $dropdown-item-height;
+  cursor: pointer;
+  font-size: $font-size-default;
+  padding: 0 $padding-medium;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item:hover {
+  background-color: $hover-background;
+}
+
+.dropdown-item:focus {
+  outline: none;
+}
+
+.arrow {
+  transition: transform $transition-cubic;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}

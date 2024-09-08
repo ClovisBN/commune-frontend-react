@@ -1,0 +1,55 @@
+@import "../variables.scss";
+
+.option {
+  display: flex;
+  align-items: center;
+  background-color: none;
+  border-radius: 8px;
+  height: 34px;
+  padding: 0px 6px;
+}
+
+.option-dnd-svg {
+  fill: #a2a0a2;
+  stroke: #a2a0a2;
+  transition: fill 0.2s;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+}
+
+.option-sicle-checkBox-svg {
+  height: 16px;
+  width: 16px;
+  fill: #1e1f21;
+  stroke: #a2a0a2;
+}
+
+.option-dnd-svg,
+.option-sicle-checkBox-svg {
+  flex-shrink: 0;
+  margin-right: 5px; /* Ajuster l'espacement ici */
+}
+
+// .option:hover {
+//   background-color: rgba(255, 255, 255, 0.04);
+//   .option-dnd-svg {
+//     fill: rgba(255, 255, 255, 1);
+//   }
+// }
+
+// .option:focus-within {
+//   background-color: rgba(255, 255, 255, 0.07);
+// }
+
+.multiple-choice-question .option,
+.checkbox-question .option {
+  display: flex;
+  align-items: center;
+}
+
+.multiple-choice-question {
+  padding: 25px 10px;
+  //   border-right: 1px solid $border-color;
+  //   border-left: 1px solid $border-color;
+}

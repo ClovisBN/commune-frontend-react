@@ -19,21 +19,20 @@ import {
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
 import SortableQuestion from "./SortableQuestion";
-import useDocument from "./useDocument";
-import "./QuestionUI.css";
+import useDocument from "../hooks/useDocument";
+import html2canvas from "html2canvas";
+import api from "../services/Api"; // Importer api pour les requêtes
+import InputField from "./InputComponents/InputField"; // Import du composant InputField
 
 const QuestionUI = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const formRef = useRef(null);
   const addButtonRef = useRef(null);
   const [activeId, setActiveId] = useState(null);
-  const {
-    doc,
-    setDoc,
-    selectedQuestionId,
-    setSelectedQuestionId,
-    saveDocument,
-  } = useDocument(id, navigate);
+  const [questionPosition, setQuestionPosition] = useState(0);
+  const { doc, setDoc, selectedQuestionId, setSelectedQuestionId } =
+    useDocument(id, navigate); // Supprimé saveDocument, car non utilisé
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -144,29 +143,62 @@ const QuestionUI = () => {
     setActiveId(null);
   };
 
-  useEffect(() => {
-    if (selectedQuestionId && addButtonRef.current) {
-      const selectedElement = document.getElementById(selectedQuestionId);
-      if (selectedElement) {
-        const rect = selectedElement.getBoundingClientRect();
-        addButtonRef.current.style.top = `${rect.top + window.scrollY}px`;
+  const saveDocumentWithScreenshot = async (redirectToPreview = false) => {
+    try {
+      let screenshot = null;
+      if (formRef.current) {
+        const canvas = await html2canvas(formRef.current);
+        screenshot = canvas.toDataURL("image/png");
+      }
+
+      // Envoyer le document et le screenshot au backend
+      await api.put(`/documents/${id}`, {
+        ...doc,
+        screenshot, // Envoyer le screenshot avec les autres données du document
+      });
+
+      // Nettoyer le localStorage si nécessaire
+      localStorage.removeItem(`document-${id}`);
+
+      if (redirectToPreview) {
+        navigate(`/documents/preview/${id}`);
+      }
+    } catch (error) {
+      if (error.message === "Token expired") {
+        console.log("Your token expired");
+        navigate("/login");
+      } else {
+        console.error("Error saving document:", error);
       }
     }
-  }, [selectedQuestionId, doc.questions]);
+  };
+
+  useEffect(() => {
+    if (addButtonRef.current) {
+      addButtonRef.current.style.top = `${questionPosition}px`;
+    }
+  }, [questionPosition]);
 
   return (
-    <div className="document-container">
-      <input
-        type="text"
-        value={doc.name}
-        onChange={(e) => setDoc({ ...doc, name: e.target.value })}
-        className="document-title"
-      />
-      <textarea
-        value={doc.description}
-        onChange={(e) => setDoc({ ...doc, description: e.target.value })}
-        className="document-description"
-      />
+    <div className="document-container container-scroll-element" ref={formRef}>
+      <div className="survey-header-contnaire">
+        <InputField
+          type="text"
+          name="documentName"
+          value={doc.name}
+          onChange={(e) => setDoc({ ...doc, name: e.target.value })}
+          placeholder="Document Name"
+          variant="variant3"
+        />
+        <InputField
+          type="textarea"
+          name="documentDescription"
+          value={doc.description}
+          onChange={(e) => setDoc({ ...doc, description: e.target.value })}
+          placeholder="Document Description"
+          variant="variant3"
+        />
+      </div>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -179,36 +211,36 @@ const QuestionUI = () => {
           items={doc.questions}
           strategy={verticalListSortingStrategy}
         >
-          <div className="questions-container">
-            <div className="questions-list">
-              {doc.questions.map((question) => (
-                <SortableQuestion
-                  key={question.id}
-                  question={question}
-                  selectedQuestionId={selectedQuestionId}
-                  setSelectedQuestionId={setSelectedQuestionId}
-                  setDoc={setDoc}
-                  handleDeleteQuestion={handleDeleteQuestion}
-                  handleDuplicateQuestion={handleDuplicateQuestion}
-                  onToggleRequired={() =>
-                    setDoc((prevState) => ({
-                      ...prevState,
-                      questions: prevState.questions.map((q) =>
-                        q.id === question.id
-                          ? { ...q, isRequired: !q.isRequired }
-                          : q
-                      ),
-                    }))
-                  }
-                />
-              ))}
-            </div>
+          <div className="questions-list">
+            {doc.questions.map((question) => (
+              <SortableQuestion
+                key={question.id}
+                question={question}
+                selectedQuestionId={selectedQuestionId}
+                setSelectedQuestionId={setSelectedQuestionId}
+                setDoc={setDoc}
+                handleDeleteQuestion={handleDeleteQuestion}
+                handleDuplicateQuestion={handleDuplicateQuestion}
+                onToggleRequired={() =>
+                  setDoc((prevState) => ({
+                    ...prevState,
+                    questions: prevState.questions.map((q) =>
+                      q.id === question.id
+                        ? { ...q, isRequired: !q.isRequired }
+                        : q
+                    ),
+                  }))
+                }
+                setQuestionPosition={setQuestionPosition} // Pass setQuestionPosition to SortableQuestion
+              />
+            ))}
             <button
               ref={addButtonRef}
               className="add-question-button"
               onClick={addQuestion}
+              style={{ position: "absolute" }}
             >
-              Add Question
+              Add
             </button>
           </div>
         </SortableContext>
@@ -229,12 +261,16 @@ const QuestionUI = () => {
                   ),
                 }))
               }
+              setQuestionPosition={setQuestionPosition} // Pass setQuestionPosition to SortableQuestion
             />
           ) : null}
         </DragOverlay>
       </DndContext>
-      <button onClick={() => saveDocument(false)}>Save</button>
-      <button onClick={() => saveDocument(true)} className="preview-button">
+      <button onClick={() => saveDocumentWithScreenshot(false)}>Save</button>
+      <button
+        onClick={() => saveDocumentWithScreenshot(true)}
+        className="preview-button"
+      >
         Preview Document
       </button>
     </div>
