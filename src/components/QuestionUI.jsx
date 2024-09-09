@@ -20,30 +20,30 @@ import {
 } from "@dnd-kit/modifiers";
 import SortableQuestion from "./SortableQuestion";
 import useDocument from "../hooks/useDocument";
-import html2canvas from "html2canvas";
-import api from "../services/Api"; // Importer api pour les requêtes
-import InputField from "./InputComponents/InputField"; // Import du composant InputField
+import InputField from "./InputComponents/InputField";
+import AddQuestionButton from "./AddQuestionButton";
+import { useScreenshot } from "../hooks/useScreenshot"; // Importing the hook
 
 const QuestionUI = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const formRef = useRef(null);
+  const { formRef, takeScreenshot } = useScreenshot(); // Using the hook
   const addButtonRef = useRef(null);
   const [activeId, setActiveId] = useState(null);
-  const [questionPosition, setQuestionPosition] = useState(0);
   const { doc, setDoc, selectedQuestionId, setSelectedQuestionId } =
-    useDocument(id, navigate); // Supprimé saveDocument, car non utilisé
+    useDocument(id, navigate);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
+
+  const updateQuestions = (updateFn) => {
+    setDoc((prevState) => ({
+      ...prevState,
+      questions: updateFn(prevState.questions),
+    }));
+  };
 
   const addQuestion = () => {
     const newQuestion = {
@@ -54,130 +54,70 @@ const QuestionUI = () => {
       isRequired: false,
     };
 
-    setDoc((prevState) => {
-      const selectedQuestionIndex = prevState.questions.findIndex(
+    updateQuestions((questions) => {
+      const selectedQuestionIndex = questions.findIndex(
         (q) => q.id === selectedQuestionId
       );
-      const newQuestions = [...prevState.questions];
-      newQuestions.splice(selectedQuestionIndex + 1, 0, newQuestion);
-      return {
-        ...prevState,
-        questions: newQuestions,
-      };
+      return [
+        ...questions.slice(0, selectedQuestionIndex + 1),
+        newQuestion,
+        ...questions.slice(selectedQuestionIndex + 1),
+      ];
     });
 
     setSelectedQuestionId(newQuestion.id);
   };
 
-  const handleDeleteQuestion = (questionId) => {
-    setDoc((prevState) => {
-      const newQuestions = prevState.questions.filter(
-        (q) => q.id !== questionId
-      );
-      let newSelectedQuestionId = null;
-
-      if (newQuestions.length > 0) {
-        const deletedQuestionIndex = prevState.questions.findIndex(
-          (q) => q.id === questionId
-        );
-        if (deletedQuestionIndex === 0) {
-          newSelectedQuestionId = newQuestions[0].id;
-        } else {
-          newSelectedQuestionId = newQuestions[deletedQuestionIndex - 1].id;
-        }
+  const handleQuestionAction = (questionId, action) => {
+    updateQuestions((questions) => {
+      if (action === "delete") {
+        return questions.filter((q) => q.id !== questionId);
+      } else if (action === "duplicate") {
+        const question = questions.find((q) => q.id === questionId);
+        const duplicatedQuestion = { ...question, id: uuidv4() };
+        const index = questions.indexOf(question);
+        return [
+          ...questions.slice(0, index + 1),
+          duplicatedQuestion,
+          ...questions.slice(index + 1),
+        ];
       }
-
-      setSelectedQuestionId(newSelectedQuestionId);
-
-      return {
-        ...prevState,
-        questions: newQuestions,
-      };
+      return questions;
     });
   };
 
-  const handleDuplicateQuestion = (question) => {
-    const newQuestion = { ...question, id: uuidv4() };
-    setDoc((prevState) => {
-      const questionIndex = prevState.questions.findIndex(
-        (q) => q.id === question.id
-      );
-      const newQuestions = [...prevState.questions];
-      newQuestions.splice(questionIndex + 1, 0, newQuestion);
-      return {
-        ...prevState,
-        questions: newQuestions,
-      };
-    });
-
-    setSelectedQuestionId(newQuestion.id);
-  };
-
-  const handleDragStart = (event) => {
-    setActiveId(event.active.id);
-  };
+  const handleDragStart = (event) => setActiveId(event.active.id);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-
     setActiveId(null);
 
     if (active.id !== over.id) {
-      setDoc((prevState) => {
-        const oldIndex = prevState.questions.findIndex(
-          (q) => q.id === active.id
-        );
-        const newIndex = prevState.questions.findIndex((q) => q.id === over.id);
-
-        const newQuestions = arrayMove(prevState.questions, oldIndex, newIndex);
-
-        return {
-          ...prevState,
-          questions: newQuestions,
-        };
+      updateQuestions((questions) => {
+        const oldIndex = questions.findIndex((q) => q.id === active.id);
+        const newIndex = questions.findIndex((q) => q.id === over.id);
+        return arrayMove(questions, oldIndex, newIndex);
       });
-    }
-  };
-
-  const handleDragCancel = () => {
-    setActiveId(null);
-  };
-
-  const saveDocumentWithScreenshot = async (redirectToPreview = false) => {
-    try {
-      let screenshot = null;
-      if (formRef.current) {
-        const canvas = await html2canvas(formRef.current);
-        screenshot = canvas.toDataURL("image/png");
-      }
-
-      // Envoyer le document et le screenshot au backend
-      await api.put(`/documents/${id}`, {
-        ...doc,
-        screenshot, // Envoyer le screenshot avec les autres données du document
-      });
-
-      // Nettoyer le localStorage si nécessaire
-      localStorage.removeItem(`document-${id}`);
-
-      if (redirectToPreview) {
-        navigate(`/documents/preview/${id}`);
-      }
-    } catch (error) {
-      if (error.message === "Token expired") {
-        console.log("Your token expired");
-        navigate("/login");
-      } else {
-        console.error("Error saving document:", error);
-      }
     }
   };
 
   useEffect(() => {
-    if (addButtonRef.current) {
-      addButtonRef.current.style.top = `${questionPosition}px`;
-    }
-  }, [questionPosition]);
+    const updateButtonPosition = () => {
+      const selectedQuestion = document.querySelector(
+        `.question-wrapper.selected`
+      );
+
+      if (selectedQuestion && addButtonRef.current) {
+        const questionTop = selectedQuestion.offsetTop;
+
+        requestAnimationFrame(() => {
+          addButtonRef.current.style.top = `${questionTop}px`;
+        });
+      }
+    };
+
+    updateButtonPosition();
+  }, [selectedQuestionId, doc.questions]);
 
   return (
     <div className="document-container container-scroll-element" ref={formRef}>
@@ -204,71 +144,72 @@ const QuestionUI = () => {
         collisionDetection={closestCenter}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        onDragCancel={handleDragCancel}
+        onDragCancel={() => setActiveId(null)}
         modifiers={[restrictToVerticalAxis, restrictToParentElement]}
       >
         <SortableContext
           items={doc.questions}
           strategy={verticalListSortingStrategy}
         >
-          <div className="questions-list">
-            {doc.questions.map((question) => (
-              <SortableQuestion
-                key={question.id}
-                question={question}
-                selectedQuestionId={selectedQuestionId}
-                setSelectedQuestionId={setSelectedQuestionId}
-                setDoc={setDoc}
-                handleDeleteQuestion={handleDeleteQuestion}
-                handleDuplicateQuestion={handleDuplicateQuestion}
-                onToggleRequired={() =>
-                  setDoc((prevState) => ({
-                    ...prevState,
-                    questions: prevState.questions.map((q) =>
-                      q.id === question.id
-                        ? { ...q, isRequired: !q.isRequired }
-                        : q
-                    ),
-                  }))
-                }
-                setQuestionPosition={setQuestionPosition} // Pass setQuestionPosition to SortableQuestion
-              />
-            ))}
-            <button
-              ref={addButtonRef}
-              className="add-question-button"
-              onClick={addQuestion}
-              style={{ position: "absolute" }}
-            >
-              Add
-            </button>
+          <div className="question-list-container">
+            <div className="questions-list">
+              {doc.questions.map((question) => (
+                <SortableQuestion
+                  key={question.id}
+                  question={question}
+                  selectedQuestionId={selectedQuestionId}
+                  setSelectedQuestionId={setSelectedQuestionId}
+                  setDoc={setDoc}
+                  handleDeleteQuestion={() =>
+                    handleQuestionAction(question.id, "delete")
+                  }
+                  handleDuplicateQuestion={() =>
+                    handleQuestionAction(question.id, "duplicate")
+                  }
+                  onToggleRequired={() =>
+                    updateQuestions((questions) =>
+                      questions.map((q) =>
+                        q.id === question.id
+                          ? { ...q, isRequired: !q.isRequired }
+                          : q
+                      )
+                    )
+                  }
+                />
+              ))}
+            </div>
+            <AddQuestionButton ref={addButtonRef} onClick={addQuestion} />
           </div>
         </SortableContext>
         <DragOverlay>
-          {activeId ? (
+          {activeId && (
             <SortableQuestion
               question={doc.questions.find((q) => q.id === activeId)}
               selectedQuestionId={selectedQuestionId}
               setSelectedQuestionId={setSelectedQuestionId}
               setDoc={setDoc}
-              handleDeleteQuestion={handleDeleteQuestion}
-              handleDuplicateQuestion={handleDuplicateQuestion}
-              onToggleRequired={() =>
-                setDoc((prevState) => ({
-                  ...prevState,
-                  questions: prevState.questions.map((q) =>
-                    q.id === activeId ? { ...q, isRequired: !q.isRequired } : q
-                  ),
-                }))
+              handleDeleteQuestion={() =>
+                handleQuestionAction(activeId, "delete")
               }
-              setQuestionPosition={setQuestionPosition} // Pass setQuestionPosition to SortableQuestion
+              handleDuplicateQuestion={() =>
+                handleQuestionAction(activeId, "duplicate")
+              }
+              onToggleRequired={() =>
+                updateQuestions((questions) =>
+                  questions.map((q) =>
+                    q.id === activeId ? { ...q, isRequired: !q.isRequired } : q
+                  )
+                )
+              }
             />
-          ) : null}
+          )}
         </DragOverlay>
       </DndContext>
-      <button onClick={() => saveDocumentWithScreenshot(false)}>Save</button>
+      <button onClick={() => takeScreenshot(doc, id, false, navigate)}>
+        Save
+      </button>
       <button
-        onClick={() => saveDocumentWithScreenshot(true)}
+        onClick={() => takeScreenshot(doc, id, true, navigate)}
         className="preview-button"
       >
         Preview Document

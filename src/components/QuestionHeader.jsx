@@ -10,7 +10,7 @@ const QuestionHeader = ({ text, type, onTextChange, onTypeChange }) => {
         <InputField
           name="question-survey-title"
           type="text"
-          value={text}
+          value={text || ""}
           onChange={(e) => onTextChange(e.target.value)}
           placeholder="Enter your question title"
           variant="variant2"

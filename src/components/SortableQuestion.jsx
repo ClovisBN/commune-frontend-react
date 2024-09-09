@@ -11,7 +11,6 @@ const SortableQuestion = ({
   handleDeleteQuestion,
   handleDuplicateQuestion,
   onToggleRequired,
-  setQuestionPosition,
 }) => {
   const { listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: question.id });
@@ -27,10 +26,9 @@ const SortableQuestion = ({
 
   useEffect(() => {
     if (selectedQuestionId === question.id && questionRef.current) {
-      const rect = questionRef.current.getBoundingClientRect();
-      setQuestionPosition(rect.top + window.scrollY);
+      // Peut-être d'autres effets ici si nécessaire
     }
-  }, [selectedQuestionId, question.id, setQuestionPosition]);
+  }, [selectedQuestionId, question.id]);
 
   return (
     <div
@@ -44,7 +42,7 @@ const SortableQuestion = ({
       }`}
       onClick={() => setSelectedQuestionId(question.id)}
     >
-      <div {...listeners} className="dnd-kit-handle"></div> {/* Drag handle */}
+      <div {...listeners} className="dnd-kit-handle"></div>
       <UnifiedQuestion
         question={question}
         onChange={(updatedQuestion) =>

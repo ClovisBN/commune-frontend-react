@@ -6,7 +6,7 @@ const Card = ({ document: doc, onDelete }) => {
   const menuRef = useRef(null);
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Empêche le clic de propager pour ne pas déclencher l'événement de la carte
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 

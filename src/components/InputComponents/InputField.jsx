@@ -18,10 +18,8 @@ const InputField = forwardRef(
   ) => {
     const [isFocused, setIsFocused] = useState(false);
 
-    const classNames = `input-${variant}`;
-
     return (
-      <div className={`${classNames} input-field`}>
+      <div className={`input-${variant} input-field`}>
         {label && (
           <label htmlFor={name} className="input-label">
             {label}
@@ -41,6 +39,7 @@ const InputField = forwardRef(
               className="input-element"
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
+              autoFocus={false}
             />
           ) : (
             <input
@@ -55,6 +54,7 @@ const InputField = forwardRef(
               className="input-element"
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
+              autoFocus={false} // Désactive l'autofocus
             />
           )}
         </div>
