@@ -10,7 +10,10 @@
   font-size: $font-size-default;
   text-align: center;
   border-radius: $border-radius-small;
-  // transition: background-color 0.3s ease, border-color 0.3s ease;
+  user-select: none; /* Standard */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 
   &:focus {
     outline: none;

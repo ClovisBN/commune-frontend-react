@@ -1,65 +1,66 @@
 import React, { useEffect, useState } from "react";
-import api from "../services/Api";
 import { useNavigate } from "react-router-dom";
-import Card from "../components/CardComponents/Card";
+import {
+  fetchDocuments,
+  createDocument,
+  deleteDocument,
+} from "../services/documentService";
+import Card from "../shared/components/CardComponents/Card";
 
 const Templates = () => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const [isCreating, setIsCreating] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDocuments = async () => {
+    const loadDocuments = async () => {
       try {
-        const response = await api.get("/documents");
-        setDocuments(response.data.data);
+        const data = await fetchDocuments();
+        setDocuments(data);
       } catch (error) {
-        setError(error);
-        console.error("Failed to fetch documents", error);
+        console.error("Erreur lors de la récupération des documents", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDocuments();
+    loadDocuments();
   }, []);
 
-  const createDocument = async () => {
+  // Remplace l'ancienne fonction handleCreate par celle-ci
+  const handleCreate = async () => {
+    setIsCreating(true);
     try {
-      const response = await api.post("/documents", {
+      const newDocument = await createDocument({
         name: "untitled-form",
         description: "Add Description",
         questions: [],
       });
-      navigate(`/documents/${response.data.id}`);
-    } catch (error) {
-      if (error.message === "Token expired") {
-        console.log("Token expired, redirecting to login");
-        navigate("/login");
+
+      // Vérifie que l'ID est bien retourné avant la navigation
+      if (newDocument.id) {
+        navigate(`/documents/${newDocument.id}`);
       } else {
-        console.error("Failed to create document", error);
+        throw new Error("Document ID is missing");
       }
+    } catch (error) {
+      console.error("Erreur lors de la création du document", error);
+    } finally {
+      setIsCreating(false);
     }
   };
 
-  const handleDeleteDocument = async (id) => {
+  const handleDelete = async (id) => {
     try {
-      await api.delete(`/documents/${id}`);
+      await deleteDocument(id);
       setDocuments(documents.filter((doc) => doc.id !== id));
     } catch (error) {
-      console.error("Failed to delete document", error);
+      console.error("Erreur lors de la suppression du document", error);
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div>
@@ -68,11 +69,13 @@ const Templates = () => {
           <Card
             key={doc.id}
             document={doc}
-            onDelete={() => handleDeleteDocument(doc.id)}
+            onDelete={() => handleDelete(doc.id)}
           />
         ))}
       </div>
-      <button onClick={createDocument}>Create Document</button>
+      <button onClick={handleCreate} disabled={isCreating}>
+        {isCreating ? "Creating Document..." : "Create Document"}
+      </button>
     </div>
   );
 };

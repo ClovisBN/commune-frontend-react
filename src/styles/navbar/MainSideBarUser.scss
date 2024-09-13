@@ -1,8 +1,84 @@
-@import "../variables";
+.layout-container {
+  flex: 1 1 0;
+  min-height: 1px;
+  display: flex;
+}
 
-.main-sidebar-user {
-  width: 240px;
-  height: 100vh;
+.main-content {
+  flex-direction: column;
+  flex: 1;
+  min-width: 920px;
+  height: calc(100vh - 50px);
+  overflow-x: hidden;
+  display: flex;
+  position: relative;
+}
+
+.sidebar {
   background-color: #2e2e30;
-  border-right: 1px solid #444444;
+  outline: 1px solid #424244;
+  display: flex;
+  height: calc(100vh - 50px);
+  flex: none;
+  z-index: 99;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.sub-sidebar {
+  display: flex;
+}
+
+.sidebare {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+}
+
+.resize-handle {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  width: 4px;
+  height: 100%;
+  background-color: transparent;
+  cursor: col-resize;
+  position: absolute;
+}
+
+//-------------------------------------
+//-------------------------------------
+//-------------------------------------
+//-------------------------------------
+//-------------------------------------
+//-------------------------------------
+//-------------------------------------
+//-------------------------------------
+
+.top-link-content-Sidebar {
+  border-bottom: 1px solid #424244;
+  padding: 12px;
+}
+
+.top-btn-sidebar {
+  list-style: none;
+}
+
+.top-btn-sidebar li {
+  border-radius: 8px;
+  padding: 5px 10px;
+}
+
+.top-btn-sidebar li:hover {
+  background-color: rgba(252, 252, 252, 0.05);
+}
+
+.top-btn-sidebar li:active {
+  background-color: rgba(252, 252, 252, 0.117);
+}
+
+.top-btn-sidebar li a {
+  font-size: 14px;
+  text-decoration: none;
 }

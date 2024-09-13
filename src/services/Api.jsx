@@ -1,25 +1,16 @@
 import axios from "axios";
+import { handleError } from "../shared/utils/errorHandler";
 
 const api = axios.create({
   baseURL: "http://localhost:8000/api",
-  withCredentials: true, // Important for sending cookies with every request
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-const getCsrfCookie = async () => {
-  try {
-    await axios.get("http://localhost:8000/sanctum/csrf-cookie", {
-      withCredentials: true,
-    });
-  } catch (error) {
-    throw error;
-  }
-};
-
 api.interceptors.request.use(
-  async (config) => {
+  (config) => {
     const token = localStorage.getItem("access_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -29,16 +20,14 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Intercepteur de réponse pour gérer les erreurs
 api.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    if (error.response && error.response.status === 401) {
-      localStorage.removeItem("access_token");
-      window.location.href = "/login";
-    }
+  (error) => {
+    // Gestion de l'erreur avec handleError sans useNavigate
+    handleError(error);
     return Promise.reject(error);
   }
 );
 
-export { getCsrfCookie };
 export default api;

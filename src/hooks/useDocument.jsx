@@ -1,5 +1,10 @@
-import { useState, useEffect } from "react";
-import api from "../services/Api";
+import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  fetchDocumentById,
+  updateDocument as updateDocumentService,
+} from "../services/documentService"; // Centralisation des appels API
+import { handleError } from "../shared/utils/errorHandler";
+import debounce from "lodash/debounce";
 
 const useDocument = (id, navigate) => {
   const [doc, setDoc] = useState({
@@ -13,11 +18,11 @@ const useDocument = (id, navigate) => {
     const fetchDocument = async () => {
       try {
         const savedDoc = localStorage.getItem(`document-${id}`);
-        if (savedDoc) {
+        if (savedDoc && isValidDocumentId(id)) {
           setDoc(JSON.parse(savedDoc));
         } else {
-          const response = await api.get(`/documents/${id}`);
-          setDoc(response.data);
+          const fetchedDoc = await fetchDocumentById(id); // Utilisation du service
+          setDoc(fetchedDoc);
         }
 
         const savedSelectedQuestionId =
@@ -26,17 +31,32 @@ const useDocument = (id, navigate) => {
           setSelectedQuestionId(savedSelectedQuestionId);
         }
       } catch (error) {
-        if (error.message === "Token expired") {
-          console.log("Your token expired");
-          navigate("/login");
-        } else {
-          console.error("Error fetching document:", error);
-        }
+        handleError(error, navigate);
       }
     };
 
-    fetchDocument();
-  }, [id, navigate]);
+    if (!doc || !doc.id || doc.id !== id) {
+      fetchDocument();
+    }
+  }, [id, navigate, doc]);
+
+  const updateQuestions = useCallback((updateFn) => {
+    setDoc((prevState) => ({
+      ...prevState,
+      questions: updateFn(prevState.questions),
+    }));
+  }, []);
+
+  const saveDocument = useRef(
+    debounce(async (doc, id) => {
+      try {
+        await updateDocumentService(id, doc); // Utilisation du service pour mettre à jour le document
+        localStorage.removeItem(`document-${id}`);
+      } catch (error) {
+        handleError(error, navigate);
+      }
+    }, 300)
+  ).current;
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -51,21 +71,8 @@ const useDocument = (id, navigate) => {
     };
   }, [id, doc, selectedQuestionId]);
 
-  const saveDocument = async (redirectToPreview = false) => {
-    try {
-      await api.put(`/documents/${id}`, doc);
-      localStorage.removeItem(`document-${id}`);
-      if (redirectToPreview) {
-        navigate(`/documents/preview/${id}`);
-      }
-    } catch (error) {
-      if (error.message === "Token expired") {
-        console.log("Your token expired");
-        navigate("/login");
-      } else {
-        console.error("Error saving document:", error);
-      }
-    }
+  const isValidDocumentId = (id) => {
+    return true; // Logique de validation d'ID
   };
 
   return {
@@ -74,6 +81,7 @@ const useDocument = (id, navigate) => {
     selectedQuestionId,
     setSelectedQuestionId,
     saveDocument,
+    updateQuestions,
   };
 };
 

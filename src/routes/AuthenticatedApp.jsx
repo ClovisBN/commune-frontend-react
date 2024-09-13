@@ -1,10 +1,13 @@
+// src/routes/AuthenticatedApp.jsx
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import UserLayout from "../Pages/User/UserLayout";
-import AdminLayout from "../Pages/Admin/AdminLayout";
-import PrivateRoute from "../components/PrivateRoute";
+import UserLayout from "../layout/UserLayout";
+import AdminLayout from "../layout/AdminLayout";
+import PrivateRoute from "../shared/components/PrivateRoute";
 import Templates from "../Pages/Templates";
-import QuestionUI from "../components/QuestionUI";
+import QuestionUI from "../dynamicForm/components/QuestionUI";
+import ProfileDetails from "../profile/components/ProfileDetails";
+import EditProfileForm from "../profile/components/EditProfileForm";
 
 const AuthenticatedApp = () => {
   return (
@@ -13,6 +16,8 @@ const AuthenticatedApp = () => {
         <Route element={<UserLayout />}>
           <Route path="/documents" element={<Templates />} />
           <Route path="/documents/:id" element={<QuestionUI />} />
+          <Route path="/profile" element={<ProfileDetails />} />
+          <Route path="/profile/edit" element={<EditProfileForm />} />
         </Route>
       </Route>
       <Route element={<PrivateRoute allowedRoles={["admin"]} />}>

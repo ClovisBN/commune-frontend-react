@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import html2canvas from "html2canvas";
-import api from "../services/Api";
+import api from "../services/api";
 
 export const useScreenshot = () => {
   const formRef = useRef(null);
@@ -25,7 +25,8 @@ export const useScreenshot = () => {
         navigate(`/documents/preview/${documentId}`);
       }
     } catch (error) {
-      if (error.message === "Token expired") {
+      if (error.response?.status === 401) {
+        console.log("Your token expired");
         navigate("/login");
       } else {
         console.error("Error saving document:", error);
