@@ -6,10 +6,11 @@ import SideBarUser from "../sideBar/components/SideBarUser";
 const UserLayout = () => {
   return (
     <div>
-      <Navbar />
       <div className="layout-container">
         <SideBarUser />
         <div className="main-content">
+          <Navbar />
+
           <Outlet />
         </div>
       </div>

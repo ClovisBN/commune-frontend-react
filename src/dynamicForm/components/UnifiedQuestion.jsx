@@ -5,7 +5,6 @@ import MultipleChoiceQuestion from "../QuestionTypeForm/MultipleChoiceQuestion";
 import ShortAnswerQuestion from "../QuestionTypeForm/ShortAnswerQuestion";
 import DateQuestion from "../QuestionTypeForm/DateQuestion";
 import TimeQuestion from "../QuestionTypeForm/TimeQuestion";
-import CheckboxQuestion from "../QuestionTypeForm/CheckboxQuestion";
 
 const UnifiedQuestion = ({
   question,
@@ -14,14 +13,21 @@ const UnifiedQuestion = ({
   onDuplicate,
   onToggleRequired,
   isSelected,
+  setActivatorNodeRef,
+  listeners,
 }) => {
   return (
-    <div className="question-container">
+    <div
+      style={{
+        width: "100%",
+        height: "auto",
+      }}
+    >
       <QuestionHeader
         text={question.text}
-        type={question.type}
         onTextChange={(text) => onChange({ ...question, text })}
-        onTypeChange={(type) => onChange({ ...question, type })}
+        setActivatorNodeRef={setActivatorNodeRef}
+        listeners={listeners}
       />
 
       {question.type === "multiple-choice" && (
@@ -36,18 +42,15 @@ const UnifiedQuestion = ({
       {question.type === "time" && (
         <TimeQuestion question={question} onChange={onChange} />
       )}
-      {question.type === "checkbox" && (
-        <CheckboxQuestion question={question} onChange={onChange} />
-      )}
 
-      {isSelected && (
-        <QuestionFooter
-          onDelete={onDelete}
-          onDuplicate={onDuplicate}
-          onToggleRequired={onToggleRequired}
-          isRequired={question.isRequired}
-        />
-      )}
+      <QuestionFooter
+        onDelete={onDelete}
+        onDuplicate={onDuplicate}
+        onToggleRequired={onToggleRequired}
+        isRequired={question.isRequired}
+        currentType={question.type} // Passer le type actuel de la question
+        onTypeChange={(type) => onChange({ ...question, type })} // Gestion du changement de type
+      />
     </div>
   );
 };

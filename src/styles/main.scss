@@ -12,20 +12,23 @@
 //----------------------------
 // Button
 //----------------------------
-@import "./btn/DropDown.scss";
-@import "./btn/ButtonSelect.scss";
-@import "./btn/BtnProfile.scss";
 
 // Button Default with Variant
 @import "./btn/default/ButtonDefault.scss";
 @import "./btn/default/ButtonDefaultVariant1.scss";
 @import "./btn/default/ButtonDefaultVariant2.scss";
 @import "./btn/default/ButtonDefaultVariant3.scss";
+@import "./btn/default/ButtonDefaultVariant4.scss";
+@import "./btn/default/ButtonDefaultVariant5.scss";
 
+@import "./btn/DropDown.scss";
+@import "./btn/ButtonSelect.scss";
+@import "./btn/BtnProfile.scss";
 //----------------------------
 // Card
 //----------------------------
 @import "./card/Card";
+@import "./card/UserCardSurvey";
 
 //----------------------------
 // NavBar
@@ -37,11 +40,26 @@
 //  @import "./navbar";
 
 //----------------------------
-// SurveyComponents
+// adminSurveyComponents
 //----------------------------
-@import "./surveyComponents/MultipleChoiceSurvey.scss";
-@import "./surveyComponents/WrapperQuestionSurvey.scss";
-@import "./surveyComponents/HeaderSurvey.scss";
+@import "./adminSurveyComponents/MultipleChoiceSurvey.scss";
+@import "./adminSurveyComponents/DateQuestionSurvey.scss";
+@import "./adminSurveyComponents/ShortAnswerQuestionSurvey.scss";
+@import "./adminSurveyComponents/TimeQuestionSurvey.scss";
+
+@import "./adminSurveyComponents/WrapperQuestionSurvey.scss";
+@import "./adminSurveyComponents/HeaderSurvey.scss";
+
+//----------------------------
+// userSurveyComponents
+//----------------------------
+@import "./userSurveyComponents/UserTemplateListSurvey.scss";
+@import "./userSurveyComponents/SurveyAnswer.scss";
+
+@import "./userSurveyComponents/DateQuestionSurveyAnswer.scss";
+@import "./userSurveyComponents/MultipleChoiceSurveyAnswer.scss";
+@import "./userSurveyComponents/ShortAnswerSurveyAnswer.scss";
+@import "./userSurveyComponents/TimeQuestionSurveyAnswer.scss";
 
 //----------------------------
 // header
@@ -53,3 +71,13 @@
 // footer
 //----------------------------
 @import "./footer/FooterQuestionSurveyEdit.scss";
+
+.document-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: $bg-secondary-color;
+  min-width: 200px;
+}

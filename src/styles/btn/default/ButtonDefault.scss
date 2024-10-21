@@ -23,3 +23,10 @@
     opacity: 0.9;
   }
 }
+
+.button-default div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

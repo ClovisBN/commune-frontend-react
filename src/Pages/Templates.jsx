@@ -1,3 +1,4 @@
+// Templates.js
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -6,6 +7,7 @@ import {
   deleteDocument,
 } from "../services/documentService";
 import Card from "../shared/components/CardComponents/Card";
+import { v4 as uuidv4 } from "uuid";
 
 const Templates = () => {
   const [documents, setDocuments] = useState([]);
@@ -28,17 +30,26 @@ const Templates = () => {
     loadDocuments();
   }, []);
 
-  // Remplace l'ancienne fonction handleCreate par celle-ci
   const handleCreate = async () => {
     setIsCreating(true);
     try {
       const newDocument = await createDocument({
         name: "untitled-form",
         description: "Add Description",
-        questions: [],
+        questions: [
+          {
+            id: uuidv4(),
+            type: "multiple-choice",
+            text: "",
+            options: [
+              { id: uuidv4(), text: "Option 1" },
+              { id: uuidv4(), text: "Option 2" },
+            ],
+            isRequired: false,
+          },
+        ],
       });
 
-      // Vérifie que l'ID est bien retourné avant la navigation
       if (newDocument.id) {
         navigate(`/documents/${newDocument.id}`);
       } else {

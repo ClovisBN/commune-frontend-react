@@ -9,13 +9,22 @@
   padding: 0px 6px;
 }
 
+.selected .option:hover {
+  .drag-handle {
+    visibility: visible;
+  }
+}
+
 .option-dnd-svg {
   fill: #a2a0a2;
   stroke: #a2a0a2;
   transition: fill 0.2s;
-  height: 16px;
-  width: 16px;
-  cursor: pointer;
+  min-width: 16px;
+  cursor: grab;
+}
+
+.selected .drag-handle:target {
+  cursor: grabbing;
 }
 
 .option-sicle-checkBox-svg {
@@ -49,7 +58,18 @@
 }
 
 .multiple-choice-question {
-  padding: 25px 10px;
+  padding: 25px 10px 25px 0px;
+  background-color: $bg-primary-color;
+
   //   border-right: 1px solid $border-color;
   //   border-left: 1px solid $border-color;
+}
+
+.drag-handle {
+  display: none;
+}
+
+.drag-handle {
+  display: flex;
+  visibility: hidden;
 }

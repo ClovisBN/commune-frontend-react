@@ -8,9 +8,7 @@
   opacity: 1;
   color: $text-color;
   display: inline-block;
-  margin-bottom: $card-margin-bottom;
-  margin-right: 10px;
-  margin-left: 10px;
+
   width: $card-width;
   overflow: hidden;
 
@@ -25,7 +23,7 @@
   height: $image-height;
   width: $card-width;
   background-repeat: no-repeat;
-  background-size: $card-width auto;
+  background-size: 100% auto;
   border: none;
   display: block;
   position: relative;
@@ -115,9 +113,10 @@
 }
 
 .document-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+  gap: 30px; // Espacement fixe de 20px entre les cartes
   padding: 25px 50px;
+  justify-content: center; // Aligne les cartes sur le début
+  grid-auto-flow: dense; // Remplir les espaces efficacement sans étendre les cartes
 }

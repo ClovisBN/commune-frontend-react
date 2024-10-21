@@ -1,46 +1,63 @@
 import React from "react";
-import ButtonDefault from "../../shared/components/ButtonComponents/ButtonDefault"; // Assure-toi que le chemin est correct
-import {
-  HiOutlineDocumentDuplicate,
-  HiOutlineExclamationCircle,
-  HiOutlineTrash,
-} from "react-icons/hi";
+import ButtonDefault from "../../shared/components/ButtonComponents/ButtonDefault";
+import { HiMiniDocumentDuplicate } from "react-icons/hi2";
+import { MdDelete } from "react-icons/md";
+import { IoAlertCircle } from "react-icons/io5";
+import SelectQuestionType from "./SelectQuestionType"; // Importer le composant
 
 const QuestionFooter = ({
   onDelete,
   onDuplicate,
   onToggleRequired,
   isRequired,
+  currentType,
+  onTypeChange,
 }) => {
   return (
     <div className="question-footer">
-      <ButtonDefault
-        onClick={onDelete}
-        variant="variant3"
-        title="Delete Question"
-      >
-        <HiOutlineTrash
-          style={{ width: "16px", height: "16px", fill: "#9198a1" }}
-        />
-      </ButtonDefault>
-      <ButtonDefault
-        onClick={onDuplicate}
-        variant="variant3"
-        title="Duplicate Question"
-      >
-        <HiOutlineDocumentDuplicate
-          style={{ width: "16px", height: "16px", fill: "#9198a1" }}
-        />
-      </ButtonDefault>
+      <SelectQuestionType
+        currentType={currentType}
+        onTypeChange={onTypeChange}
+      />
+
+      <div className="spacer"></div>
+
       <ButtonDefault
         onClick={onToggleRequired}
-        variant="variant3"
+        variant="variant5"
         title="Toggle Required"
       >
-        <HiOutlineExclamationCircle
-          style={{ width: "16px", height: "16px", fill: "#9198a1" }}
-          color={isRequired ? "red" : "gray"}
-        />
+        <div>
+          <IoAlertCircle
+            style={{ width: "16px", height: "16px" }}
+            color={isRequired ? "red" : "gray"}
+          />
+          <span>requier</span>
+        </div>
+      </ButtonDefault>
+
+      <span className="separator-vertical"></span>
+
+      <ButtonDefault
+        onClick={onDuplicate}
+        variant="variant5 btn-duplicate"
+        title="Duplicate Question"
+      >
+        <div>
+          <HiMiniDocumentDuplicate style={{ width: "16px", height: "16px" }} />
+          <span>duplicate</span>
+        </div>
+      </ButtonDefault>
+
+      <ButtonDefault
+        onClick={onDelete}
+        variant="variant5 btn-delete"
+        title="Delete Question"
+      >
+        <div>
+          <MdDelete style={{ width: "16px", height: "16px" }} />
+          <span>delete</span>
+        </div>
       </ButtonDefault>
     </div>
   );

@@ -1,6 +1,11 @@
 @import "../../variables";
 
 .button-variant2 {
+  display: none;
+}
+
+.selected .button-variant2 {
+  display: flex;
   background-color: none;
   color: white;
   margin-right: 2px;
@@ -18,6 +23,6 @@
   width: 16px;
 }
 
-.button-variant2:hover svg {
+.selected .button-variant2:hover svg {
   fill: #ffffff;
 }

@@ -1,0 +1,32 @@
+@import "../../variables";
+
+.button-variant5 {
+  color: white;
+  padding: 2px 5px;
+  margin: 1px 5px 1px 5px;
+  transition: background 0.25s;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid #424244;
+}
+
+.button-variant5 button svg {
+  height: 26px;
+  width: 26px;
+}
+
+.button-variant5 span {
+  padding-left: 5px;
+  font-size: 12px;
+}
+
+.btn-delete {
+  background: #f1244c;
+  color: #ed6983;
+  border-color: #ed6983;
+}
+
+.btn-duplicate {
+  background: #246ff1;
+  color: #6993ed;
+  border-color: #6993ed;
+}

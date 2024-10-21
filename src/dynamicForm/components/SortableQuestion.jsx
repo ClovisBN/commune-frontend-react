@@ -1,6 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import React from "react";
 import UnifiedQuestion from "./UnifiedQuestion";
 
 const SortableQuestion = ({
@@ -11,38 +9,28 @@ const SortableQuestion = ({
   handleDeleteQuestion,
   handleDuplicateQuestion,
   onToggleRequired,
+  attributes,
+  listeners,
+  setNodeRef,
+  setActivatorNodeRef,
+  isDragging,
 }) => {
-  const { listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: question.id });
-
-  const questionRef = useRef(null);
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    zIndex: isDragging ? 9999 : "auto",
-    opacity: isDragging ? 0 : 1,
-  };
-
-  useEffect(() => {
-    if (selectedQuestionId === question.id && questionRef.current) {
-      // Peut-être d'autres effets ici si nécessaire
-    }
-  }, [selectedQuestionId, question.id]);
-
   return (
     <div
-      ref={(node) => {
-        setNodeRef(node);
-        questionRef.current = node;
-      }}
-      style={style}
+      id={`question-${question.id}`}
       className={`question-wrapper ${
         selectedQuestionId === question.id ? "selected" : ""
       }`}
       onClick={() => setSelectedQuestionId(question.id)}
+      ref={setNodeRef}
+      {...attributes}
+      style={{
+        opacity: isDragging ? 0 : 1,
+        position: "relative",
+        width: "100%",
+        height: "auto",
+      }}
     >
-      <div {...listeners} className="dnd-kit-handle"></div>
       <UnifiedQuestion
         question={question}
         onChange={(updatedQuestion) =>
@@ -57,6 +45,8 @@ const SortableQuestion = ({
         onDuplicate={() => handleDuplicateQuestion(question)}
         onToggleRequired={onToggleRequired}
         isSelected={selectedQuestionId === question.id}
+        setActivatorNodeRef={setActivatorNodeRef}
+        listeners={listeners}
       />
     </div>
   );

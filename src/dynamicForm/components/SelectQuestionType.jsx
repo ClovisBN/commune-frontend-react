@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 
 const SelectQuestionType = ({ currentType, onTypeChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [height, setHeight] = useState("0px");
   const dropdownListRef = useRef(null);
+  const buttonRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -14,21 +14,47 @@ const SelectQuestionType = ({ currentType, onTypeChange }) => {
     setIsOpen(false);
   };
 
+  // Liste des types de questions disponibles
+  const questionTypes = [
+    { label: "Multiple Choice", value: "multiple-choice" },
+    { label: "Short Answer", value: "short-answer" },
+    { label: "Date", value: "date" },
+    { label: "Time", value: "time" },
+  ];
+
+  // Filtrer les types de questions pour exclure le type actuel
+  const filteredQuestionTypes = questionTypes.filter(
+    (type) => type.value !== currentType
+  );
+
+  // Fermer le menu déroulant si on clique en dehors
   useEffect(() => {
-    if (isOpen && dropdownListRef.current) {
-      setHeight(`${dropdownListRef.current.scrollHeight}px`);
-    } else {
-      setHeight("0px");
-    }
-  }, [isOpen]);
+    const handleClickOutside = (event) => {
+      if (
+        dropdownListRef.current &&
+        !dropdownListRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="dropdown-container">
+    <div className="cont-select-question-type">
       <button
-        className="dropdown-btn"
+        className="button-default dropdown-btn"
         onClick={toggleDropdown}
         aria-expanded={isOpen}
         aria-controls="dropdown-list"
+        ref={buttonRef}
       >
         {currentType.charAt(0).toUpperCase() +
           currentType.slice(1).replace("-", " ")}
@@ -38,50 +64,17 @@ const SelectQuestionType = ({ currentType, onTypeChange }) => {
         id="dropdown-list"
         className={`dropdown-list ${isOpen ? "show" : ""}`}
         ref={dropdownListRef}
-        style={{
-          height: height,
-        }}
       >
-        <li>
-          <button
-            className="dropdown-item"
-            onClick={() => handleOptionClick("multiple-choice")}
-          >
-            Multiple Choice
-          </button>
-        </li>
-        <li>
-          <button
-            className="dropdown-item"
-            onClick={() => handleOptionClick("short-answer")}
-          >
-            Short Answer
-          </button>
-        </li>
-        <li>
-          <button
-            className="dropdown-item"
-            onClick={() => handleOptionClick("date")}
-          >
-            Date
-          </button>
-        </li>
-        <li>
-          <button
-            className="dropdown-item"
-            onClick={() => handleOptionClick("time")}
-          >
-            Time
-          </button>
-        </li>
-        <li>
-          <button
-            className="dropdown-item"
-            onClick={() => handleOptionClick("checkbox")}
-          >
-            Checkbox
-          </button>
-        </li>
+        {filteredQuestionTypes.map((type) => (
+          <li key={type.value}>
+            <button
+              className="button-default dropdown-item"
+              onClick={() => handleOptionClick(type.value)}
+            >
+              {type.label}
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
   );

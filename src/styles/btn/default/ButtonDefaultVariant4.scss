@@ -1,0 +1,19 @@
+@import "../../variables";
+
+.button-variant4 {
+  color: white;
+  width: 26px;
+  height: 26px;
+  margin: 1px 10px 1px 1px;
+  transition: background 0.25s;
+
+  &:hover {
+    background-color: $bgColor-active;
+    // border-color: darken($primary-color, 10%);
+  }
+}
+
+.button-variant4 button svg {
+  height: 26px;
+  width: 26px;
+}

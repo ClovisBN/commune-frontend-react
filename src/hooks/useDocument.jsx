@@ -1,44 +1,55 @@
+// useDocument.js
 import { useState, useEffect, useRef, useCallback } from "react";
 import {
   fetchDocumentById,
   updateDocument as updateDocumentService,
-} from "../services/documentService"; // Centralisation des appels API
+} from "../services/documentService";
 import { handleError } from "../shared/utils/errorHandler";
 import debounce from "lodash/debounce";
 
 const useDocument = (id, navigate) => {
-  const [doc, setDoc] = useState({
-    name: "untitled-form",
-    description: "Add Description",
-    questions: [],
-  });
+  const [doc, setDoc] = useState(null);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+
+  const saveDocument = useRef(
+    debounce(async (docToSave, docId) => {
+      try {
+        await updateDocumentService(docId, docToSave);
+      } catch (error) {
+        handleError(error, navigate);
+      }
+    }, 1000)
+  ).current;
 
   useEffect(() => {
     const fetchDocument = async () => {
       try {
-        const savedDoc = localStorage.getItem(`document-${id}`);
-        if (savedDoc && isValidDocumentId(id)) {
-          setDoc(JSON.parse(savedDoc));
-        } else {
-          const fetchedDoc = await fetchDocumentById(id); // Utilisation du service
-          setDoc(fetchedDoc);
-        }
+        const fetchedDoc = await fetchDocumentById(id);
+        setDoc(fetchedDoc);
 
-        const savedSelectedQuestionId =
-          localStorage.getItem("selectedQuestionId");
-        if (savedSelectedQuestionId) {
-          setSelectedQuestionId(savedSelectedQuestionId);
+        if (fetchedDoc.questions && fetchedDoc.questions.length > 0) {
+          setSelectedQuestionId(fetchedDoc.questions[0].id);
         }
       } catch (error) {
         handleError(error, navigate);
       }
     };
 
-    if (!doc || !doc.id || doc.id !== id) {
-      fetchDocument();
+    fetchDocument();
+  }, [id, navigate]);
+
+  useEffect(() => {
+    if (doc) {
+      saveDocument(doc, id);
     }
-  }, [id, navigate, doc]);
+  }, [doc, id, saveDocument]);
+
+  useEffect(() => {
+    return () => {
+      saveDocument.flush();
+      saveDocument(doc, id);
+    };
+  }, [doc, id, saveDocument]);
 
   const updateQuestions = useCallback((updateFn) => {
     setDoc((prevState) => ({
@@ -47,40 +58,11 @@ const useDocument = (id, navigate) => {
     }));
   }, []);
 
-  const saveDocument = useRef(
-    debounce(async (doc, id) => {
-      try {
-        await updateDocumentService(id, doc); // Utilisation du service pour mettre à jour le document
-        localStorage.removeItem(`document-${id}`);
-      } catch (error) {
-        handleError(error, navigate);
-      }
-    }, 300)
-  ).current;
-
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      localStorage.setItem(`document-${id}`, JSON.stringify(doc));
-      localStorage.setItem("selectedQuestionId", selectedQuestionId);
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [id, doc, selectedQuestionId]);
-
-  const isValidDocumentId = (id) => {
-    return true; // Logique de validation d'ID
-  };
-
   return {
     doc,
     setDoc,
     selectedQuestionId,
     setSelectedQuestionId,
-    saveDocument,
     updateQuestions,
   };
 };

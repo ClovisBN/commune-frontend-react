@@ -1,0 +1,13 @@
+@import "../variables.scss";
+
+.date-question-survey-answer {
+  border: 1px solid $border;
+  border-radius: 10px;
+  background-color: $bg-secondary-color;
+  padding: 15px;
+  margin: 15px 0px;
+}
+
+.date-question-survey-answer h3 {
+  margin-bottom: 15px;
+}

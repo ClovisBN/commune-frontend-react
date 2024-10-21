@@ -1,16 +1,17 @@
 @import "../variables.scss";
 
 .question-wrapper {
-  background-color: $bgColor-primary;
   border-radius: $border-radius;
   border: 1px solid $border-color;
   margin-bottom: 30px;
   transition: border 0.2s;
+  position: relative;
 }
 
 .question-container {
   border: 0.5px solid #424244;
   border-radius: 8.5px;
+  width: 100%;
 }
 
 .question-container:hover {
@@ -29,3 +30,29 @@
 //         --color-inverse-border-active: #a2a0a2;
 //         --color-inverse-border-strong: #fff;
 // }
+
+.cont-form-doc {
+  max-width: 771px;
+  width: 100%;
+  padding: 0 20px;
+  position: relative;
+}
+
+.dnd-question-header {
+  min-width: 30px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dnd-question-header svg {
+  fill: #a2a0a2;
+  stroke: #a2a0a2;
+  transition: fill 0.2s;
+  cursor: grab;
+}
+
+.dnd-question-header svg:target {
+  cursor: grabbing;
+}

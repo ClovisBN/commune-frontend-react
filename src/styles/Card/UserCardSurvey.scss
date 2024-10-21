@@ -1,0 +1,21 @@
+@import "../variables"; // Importation des variables SCSS
+
+.user-card-survey {
+  background-color: $bg-secondary-color;
+  margin: 5px 0;
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: 1px solid $border;
+  cursor: pointer;
+}
+
+.user-card-survey h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: $font-primary-color;
+}
+
+.user-card-survey p {
+  font-size: 14px;
+  color: $font-secondary-color;
+}

@@ -1,0 +1,10 @@
+@import "../variables.scss";
+
+.survey-cont-answer {
+  max-width: 770px;
+  width: 100%;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+}

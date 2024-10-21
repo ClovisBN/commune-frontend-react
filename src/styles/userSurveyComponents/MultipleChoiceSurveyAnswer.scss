@@ -1,0 +1,20 @@
+@import "../variables.scss";
+
+.multiple-choice-survey-answer {
+  border: 1px solid $border;
+  border-radius: 10px;
+  background-color: $bg-secondary-color;
+  padding: 15px;
+  margin: 15px 0px;
+}
+
+.multiple-choice-survey-answer h3 {
+  margin-bottom: 15px;
+}
+
+.option-answare {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 0;
+}
