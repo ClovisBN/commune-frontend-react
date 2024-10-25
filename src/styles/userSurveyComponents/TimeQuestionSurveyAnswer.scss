@@ -1,9 +1,9 @@
 @import "../variables.scss";
 
 .time-question-survey-answer {
-  border: 1px solid $border;
+  border: 1px solid $border-primary;
   border-radius: 10px;
-  background-color: $bg-secondary-color;
+  background-color: $bg-tertiary-color;
   padding: 15px;
   margin: 15px 0px;
 }

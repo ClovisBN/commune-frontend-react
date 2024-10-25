@@ -1,7 +1,7 @@
-// ShortAnswerSurveyAnswer.jsx
+// ShortAnswerSurveyPreview.jsx
 import React from "react";
 
-const ShortAnswerSurveyAnswer = ({ question }) => {
+const ShortAnswerSurveyPreview = ({ question }) => {
   return (
     <div className="short-answer-survey-answer">
       <h3>{question.text}</h3>
@@ -10,4 +10,4 @@ const ShortAnswerSurveyAnswer = ({ question }) => {
   );
 };
 
-export default ShortAnswerSurveyAnswer;
+export default ShortAnswerSurveyPreview;

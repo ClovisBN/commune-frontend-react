@@ -1,0 +1,102 @@
+@import "../variables"; // Importation des variables SCSS
+
+.user-card-item {
+  background: $bg-tertiary-color;
+  border-radius: 16px;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  // border: 1px solid $bg-primary-color;
+  // outline: 0.5px solid black;
+  // box-shadow: 0px 5px 12px -8px black;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 0px 0px 1px inset $bg-tertiary-color;
+    // background: linear-gradient(
+    //     217deg,
+    //     rgb(51 56 65 / 80%),
+    //     rgba(255, 0, 0, 0) 70.71%
+    //   ),
+    //   linear-gradient(127deg, rgb(34 84 190 / 80%), rgba(0, 255, 0, 0) 70.71%),
+    //   linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+
+    // border-color: $border-secondary;
+  }
+}
+
+.user-card-item h3 {
+  font-size: 14px;
+  font-weight: 700;
+  width: 100%;
+}
+
+.user-card-item p {
+  font-size: 12px;
+  color: $font-secondary-color;
+}
+
+.user-header-card-item .icon-and-title {
+  display: flex;
+  align-items: center;
+}
+
+.user-header-card-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.item-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.items-groups {
+  grid-column: content;
+  display: flex;
+  flex-direction: column;
+}
+
+.items-groups h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 900;
+  color: rgba(90, 90, 90, 255);
+}
+
+.card-part-bottom {
+  padding: 10px 16px 12px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card-part-top {
+  min-height: 44px;
+  height: 44px;
+  border: unset;
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.card-part-top svg {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 28px;
+  width: 28px;
+  border-radius: 0.25em;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: -14px;
+  left: 16px;
+}

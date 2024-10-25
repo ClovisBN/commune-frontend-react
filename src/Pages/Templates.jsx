@@ -51,7 +51,7 @@ const Templates = () => {
       });
 
       if (newDocument.id) {
-        navigate(`/documents/${newDocument.id}`);
+        navigate(`/survey/${newDocument.id}`);
       } else {
         throw new Error("Document ID is missing");
       }
@@ -74,8 +74,8 @@ const Templates = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <div className="document-list">
+    <div className="layout-content-commune">
+      <div className="grid-column document-list">
         {documents.map((doc) => (
           <Card
             key={doc.id}
@@ -84,9 +84,11 @@ const Templates = () => {
           />
         ))}
       </div>
-      <button onClick={handleCreate} disabled={isCreating}>
-        {isCreating ? "Creating Document..." : "Create Document"}
-      </button>
+      <div className="grid-column">
+        <button onClick={handleCreate} disabled={isCreating}>
+          {isCreating ? "Creating Document..." : "Create Document"}
+        </button>
+      </div>
     </div>
   );
 };

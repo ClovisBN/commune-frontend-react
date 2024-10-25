@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 
-export const useResizableSideBar = (minWidth = 240, maxWidth = 300) => {
+export const useResizableSideBar = (minWidth = 245, maxWidth = 350) => {
   const [width, setWidth] = useState(minWidth); // Largeur initiale
   const [dragging, setDragging] = useState(false); // État du redimensionnement
   const [mouseXPosition, setMouseXPosition] = useState(null); // Position de la souris

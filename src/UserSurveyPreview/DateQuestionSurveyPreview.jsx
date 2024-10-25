@@ -1,7 +1,7 @@
-// DateQuestionSurveyAnswer.jsx
+// DateQuestionSurveyPreview.jsx
 import React from "react";
 
-const DateQuestionSurveyAnswer = ({ question }) => {
+const DateQuestionSurveyPreview = ({ question }) => {
   return (
     <div className="date-question-survey-answer">
       <h3>{question.text}</h3>
@@ -10,4 +10,4 @@ const DateQuestionSurveyAnswer = ({ question }) => {
   );
 };
 
-export default DateQuestionSurveyAnswer;
+export default DateQuestionSurveyPreview;

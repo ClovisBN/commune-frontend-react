@@ -1,14 +1,14 @@
+@import "../variables.scss";
+
 .navbar {
-  width: 100%;
-  height: 60px; // 49px + 1px de bordure
-  border-bottom: 1px solid #424244;
+  background: transparent;
+  min-height: 44px;
+  max-width: 100vw;
+  z-index: 100;
+  user-select: none;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: $bg-primary-color;
-  padding: 0 20px;
-  box-sizing: border-box;
-  z-index: 999999;
+  flex-direction: row;
+  padding: 0 10px;
 }
 
 .navbar-left {
@@ -16,10 +16,17 @@
   align-items: center;
 }
 
+.navbar-left svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: rgba(255, 255, 255, 0.81);
+}
+
 .navbar-center {
-  flex-grow: 1;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .navbar-right {
@@ -60,4 +67,8 @@
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.resize-handle:hover {
+  background-color: $border-secondary;
 }

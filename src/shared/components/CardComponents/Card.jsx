@@ -35,7 +35,7 @@ const Card = ({ document: doc, onDelete }) => {
   };
 
   const handleCardClick = () => {
-    window.location.href = `/documents/${doc.id}`;
+    window.location.href = `/survey/${doc.id}`;
   };
 
   return (

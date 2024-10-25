@@ -1,7 +1,7 @@
-// MultipleChoiceSurveyAnswer.jsx
+// MultipleChoiceSurveyPreview.jsx
 import React from "react";
 
-const MultipleChoiceSurveyAnswer = ({ question }) => {
+const MultipleChoiceSurveyPreview = ({ question }) => {
   return (
     <div className="multiple-choice-survey-answer">
       <h3>{question.text}</h3>
@@ -25,4 +25,4 @@ const MultipleChoiceSurveyAnswer = ({ question }) => {
   );
 };
 
-export default MultipleChoiceSurveyAnswer;
+export default MultipleChoiceSurveyPreview;

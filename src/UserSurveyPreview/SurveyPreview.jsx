@@ -1,13 +1,13 @@
-// SurveyAnswer.jsx
+// SurveyPreview.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchDocumentById } from "../services/documentService";
-import DateQuestionSurveyAnswer from "../UserSurveyAnswer/DateQuestionSurveyAnswer";
-import MultipleChoiceSurveyAnswer from "../UserSurveyAnswer/MultipleChoiceSurveyAnswer";
-import ShortAnswerSurveyAnswer from "../UserSurveyAnswer/ShortAnswerSurveyAnswer";
-import TimeQuestionSurveyAnswer from "../UserSurveyAnswer/TimeQuestionSurveyAnswer";
+import DateQuestionSurveyPreview from "./DateQuestionSurveyPreview";
+import MultipleChoiceSurveyPreview from "./MultipleChoiceSurveyPreview";
+import ShortAnswerSurveyPreview from "./ShortAnswerSurveyPreview";
+import TimeQuestionSurveyPreview from "./TimeQuestionSurveyPreview";
 
-const SurveyAnswer = () => {
+const SurveyPreview = () => {
   const { id } = useParams();
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -41,28 +41,28 @@ const SurveyAnswer = () => {
           switch (question.type) {
             case "date":
               return (
-                <DateQuestionSurveyAnswer
+                <DateQuestionSurveyPreview
                   key={question.id}
                   question={question}
                 />
               );
             case "multiple-choice":
               return (
-                <MultipleChoiceSurveyAnswer
+                <MultipleChoiceSurveyPreview
                   key={question.id}
                   question={question}
                 />
               );
             case "short-answer":
               return (
-                <ShortAnswerSurveyAnswer
+                <ShortAnswerSurveyPreview
                   key={question.id}
                   question={question}
                 />
               );
             case "time":
               return (
-                <TimeQuestionSurveyAnswer
+                <TimeQuestionSurveyPreview
                   key={question.id}
                   question={question}
                 />
@@ -76,4 +76,4 @@ const SurveyAnswer = () => {
   );
 };
 
-export default SurveyAnswer;
+export default SurveyPreview;

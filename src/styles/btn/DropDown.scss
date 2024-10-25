@@ -36,7 +36,7 @@
 .dropdown-list.show {
   opacity: 1;
   visibility: visible;
-  border: 1px solid $border-color;
+  border: 1px solid $border-primary;
   height: fit-content;
 }
 
@@ -52,7 +52,7 @@
   left: 10px;
   right: 10px;
   height: 1px;
-  background-color: $border-color; /* Séparateur entre les éléments */
+  background-color: $border-primary; /* Séparateur entre les éléments */
 }
 
 .dropdown-item {

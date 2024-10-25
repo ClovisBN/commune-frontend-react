@@ -16,7 +16,7 @@
   background-color: $bg-secondary-color;
   border: none;
   width: 100%;
-  outline: 1px solid $border-color;
+  outline: 1px solid $border-primary;
   border-radius: $border-radius-medium;
 }
 
@@ -32,16 +32,23 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  width: 20px;
 }
 
 .user-name {
   color: white;
   font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .user-email {
   color: white;
   font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .arrow {
@@ -71,7 +78,7 @@
 }
 
 .cont-profile-options {
-  outline: 1px solid $border-color;
+  outline: 1px solid $border-primary;
   border-radius: $border-radius-medium;
   padding: 10px;
   background-color: $bg-secondary-color;

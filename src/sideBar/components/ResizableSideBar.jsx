@@ -28,7 +28,7 @@ const ResizableSideBar = ({ children }) => {
         style={{
           width: "4px",
           cursor: "col-resize",
-          backgroundColor: dragging ? "#4573d2" : "transparent",
+          zIndex: "99999",
         }}
       />
     </div>

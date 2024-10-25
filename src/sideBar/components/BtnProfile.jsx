@@ -34,9 +34,9 @@ const BtnProfile = ({ user }) => {
       {isOpen && (
         <div className="profile-options">
           <div className="cont-profile-options">
-            <button className="option-btn">Mon Profil</button>
+            <button className="option-btn">Profil</button>
             <button className="option-btn" onClick={handleLogout}>
-              Se Déconnecter
+              Déconnection
             </button>
             <button className="option-btn">Paramètres</button>
           </div>
