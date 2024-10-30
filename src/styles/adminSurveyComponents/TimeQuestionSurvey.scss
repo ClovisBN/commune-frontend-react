@@ -1,6 +1,8 @@
 @import "../variables.scss";
 
 .time-question {
-  padding: 25px 30px;
-  background-color: $bg-secondary-color;
+  padding: 20px 10px;
+  background-color: $bg-primary-color;
+  border-radius: 0px 0px 10px 10px;
+  width: 100%;
 }

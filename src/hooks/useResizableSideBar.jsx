@@ -1,10 +1,13 @@
+// useResizableSideBar.js
 import { useState, useCallback, useEffect } from "react";
 
 export const useResizableSideBar = (minWidth = 245, maxWidth = 350) => {
-  const [width, setWidth] = useState(minWidth); // Largeur initiale
-  const [dragging, setDragging] = useState(false); // État du redimensionnement
-  const [mouseXPosition, setMouseXPosition] = useState(null); // Position de la souris
-  const [lockResize, setLockResize] = useState(false); // Verrouiller le redimensionnement
+  const [width, setWidth] = useState(
+    parseInt(localStorage.getItem("sidebarWidth")) || minWidth
+  );
+  const [dragging, setDragging] = useState(false);
+  const [mouseXPosition, setMouseXPosition] = useState(null);
+  const [lockResize, setLockResize] = useState(false);
 
   const disableTextSelection = () => {
     document.body.style.userSelect = "none";
@@ -38,6 +41,7 @@ export const useResizableSideBar = (minWidth = 245, maxWidth = 350) => {
       ) {
         setWidth(newWidth);
         setMouseXPosition(e.clientX);
+        localStorage.setItem("sidebarWidth", newWidth); // Mettre à jour la taille dans le localStorage
       }
     },
     [dragging, mouseXPosition, width, lockResize, minWidth, maxWidth]

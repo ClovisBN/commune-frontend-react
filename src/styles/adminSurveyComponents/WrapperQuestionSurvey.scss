@@ -1,12 +1,8 @@
 @import "../variables.scss";
 
-.question-wrapper {
-  border-radius: $border-radius;
-  border: 1px solid $border-primary;
-  margin-bottom: 30px;
-  transition: border 0.2s;
-  position: relative;
-}
+// .question-wrapper {
+
+// }
 
 .question-container {
   border: 0.5px solid $border-primary;
@@ -32,11 +28,16 @@
 // }
 
 .cont-form-doc {
-  max-width: 771px;
-  width: 100%;
-  padding: 0 20px;
   position: relative;
+  margin: 0 auto;
+  width: 100%;
 }
+
+// .contenaire-questions-survey {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 24px;
+// }
 
 .dnd-question-header {
   min-width: 30px;
@@ -55,4 +56,38 @@
 
 .dnd-question-header svg:target {
   cursor: grabbing;
+}
+
+.multiple-choice-question .create-option {
+  user-select: none;
+  transition: background 20ms ease-in;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.2;
+  min-width: 0px;
+  padding-left: 6px;
+  padding-right: 8px;
+  color: rgba(255, 255, 255, 0.282);
+  margin-left: 4px;
+  margin-top: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.055);
+  }
+}
+
+.create-option .plus {
+  width: 18px;
+  height: 14px;
+  display: block;
+  fill: rgba(255, 255, 255, 0.282);
+  flex-shrink: 0;
+  margin-right: 11px;
+  margin-left: 1px;
 }

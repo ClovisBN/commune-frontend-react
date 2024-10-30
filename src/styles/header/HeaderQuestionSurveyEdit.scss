@@ -1,17 +1,44 @@
 @import "../variables";
 
-.header-question-survey {
-  border-top-left-radius: $border-radius - 1px;
-  border-top-right-radius: $border-radius - 1px;
-  height: 40px;
-  border-bottom: 1px solid $border-primary;
-  background-color: $bg-secondary-color;
+.header-question-survey .top-header-survey textarea {
+  max-width: 100%;
+  width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+  caret-color: rgba(255, 255, 255, 0.81);
+  padding: 0px 10px;
+  margin: 10px 0px;
+  font-size: 24px;
+  line-height: 30px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: text;
 }
 
-.row-element-survey-header {
+.top-header-survey {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-question-survey .top-header-survey .dnd-question {
+  padding: 5px;
+  border-radius: 4px;
+  background-color: $bg-quinary-color;
+  border: 1px solid $border-secondary;
+  display: flex;
   align-items: center;
-  height: 100%;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.question-wrapper:hover .dnd-question {
+  opacity: 1;
+}
+
+.header-question-survey {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }

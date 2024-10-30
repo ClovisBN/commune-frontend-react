@@ -114,7 +114,7 @@ const TemplateListDocuments = ({ filterType, sortOrder, groupBy }) => {
     if (item.type === "document") {
       navigate(`/survey/${item.id}/edit`);
     } else if (item.type === "article") {
-      navigate(`/articles/${item.id}`);
+      navigate(`/articles/${item.id}/edit`);
     }
   };
 

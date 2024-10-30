@@ -31,7 +31,7 @@
 .resize-handle {
   position: absolute;
   top: 0;
-  right: -4px;
+  right: -0.5px;
   width: 4px;
   height: 100%;
   background-color: transparent;
@@ -54,19 +54,21 @@
 
 .top-btn-sidebar {
   list-style: none;
-  margin-top: 10px;
+  margin: 4px 8px 0px 8px;
 }
 
-.top-btn-sidebar li {
+.top-btn-sidebar-item {
   border-radius: 6px;
-  margin: 0px 10px;
-  padding: 4px 8px;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   height: 30px;
   transition: background 0.15s;
+  width: 100%;
 }
 
-.top-btn-sidebar li svg {
+.top-btn-sidebar-item svg {
   width: 20px;
   height: 20px;
   display: block;
@@ -75,21 +77,59 @@
   margin-right: 8px;
 }
 
-.top-btn-sidebar li a {
+.top-btn-sidebar-item a {
   color: $font-tertiary-color;
   font-weight: 600;
-  padding: 5px;
+  padding: 8px 8px;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-.top-btn-sidebar li:hover {
-  background-color: $bg-quaternary-color;
+.top-btn-sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.055);
 }
 
-.top-btn-sidebar li a {
+.top-btn-sidebar-item a {
   font-size: 14px;
   text-decoration: none;
+}
+
+.top-sidebar-accont-param {
+  margin: 8px 8px 0px 8px;
+}
+
+.top-link-content-Sidebar {
+  display: block;
+  flex-direction: column;
+}
+
+.sidebar-toggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: rgba(255, 255, 255, 0.81);
+  margin: 0;
+  transition: opacity 100ms ease;
+  position: absolute;
+  top: 5px;
+  right: 6px;
+}
+
+.sidebar-create-document svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  fill: rgba(255, 255, 255, 0.81);
+  margin: 0;
+}
+
+.sidebar-create-document {
+  margin-right: 2px;
+}
+
+.cont-btn-top-sidebar {
+  display: flex;
+  flex-direction: row;
 }

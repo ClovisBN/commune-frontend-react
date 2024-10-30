@@ -1,43 +1,28 @@
+// QuestionHeader.js
 import React from "react";
 import InputField from "../../shared/components/InputComponents/InputField";
+import { LuGrip } from "react-icons/lu";
 
-const QuestionHeader = ({
-  text,
-  onTextChange,
-  setActivatorNodeRef,
-  listeners,
-}) => {
+const QuestionHeader = ({ text, onTextChange, isRequired }) => {
   return (
     <div className="header-question-survey">
-      <div className="row-element-survey-header">
-        <div
-          className="dnd-question-header"
-          ref={setActivatorNodeRef}
-          {...listeners}
-        >
-          <svg
-            width="18.5"
-            height="18.5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 18.5 18.5"
-          >
-            <circle cx="5.5" cy="3.5" r="1" />
-            <circle cx="5.5" cy="9.25" r="1" />
-            <circle cx="5.5" cy="15" r="1" />
-            <circle cx="13" cy="3.5" r="1" />
-            <circle cx="13" cy="9.25" r="1" />
-            <circle cx="13" cy="15" r="1" />
-          </svg>
-        </div>
+      <div className="top-header-survey">
         <InputField
           name="question-survey-title"
-          type="text"
+          type="textarea"
           value={text || ""}
           onChange={(e) => onTextChange(e.target.value)}
           placeholder="Enter your question title"
           variant="variant2"
+          disabled={false} // Vous pouvez ajuster cette valeur si nécessaire
         />
+        <div className="dnd-question">
+          <LuGrip />
+        </div>
       </div>
+      {isRequired && (
+        <div className="required-message">(question obligatoire)</div>
+      )}
     </div>
   );
 };

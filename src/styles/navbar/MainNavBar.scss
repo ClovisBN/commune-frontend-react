@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: row;
   padding: 0 10px;
+  background-color: $bg-primary-color;
 }
 
 .navbar-left {
@@ -32,15 +33,6 @@
 .navbar-right {
   display: flex;
   align-items: center;
-}
-
-.sidebar-toggle {
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding-right: 20px;
 }
 
 .create-btn {
@@ -71,4 +63,27 @@
 
 .resize-handle:hover {
   background-color: $border-secondary;
+}
+
+.sidebar-toggle {
+  font-size: 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin: 0 5px;
+  opacity: 0;
+  fill: rgba(255, 255, 255, 0.443);
+  transition: opacity 200ms ease;
+  z-index: 9999999;
+}
+
+.sidebar:hover .sidebar-toggle {
+  opacity: 1;
+  svg {
+    fill: rgba(255, 255, 255, 0.443);
+  }
+}
+
+.sidebar:hover .sidebar-toggle:hover svg {
+  fill: rgba(255, 255, 255, 0.8);
 }

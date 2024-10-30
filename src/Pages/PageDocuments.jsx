@@ -4,7 +4,7 @@ import Navbar from "../navbar/components/Navbar";
 import AdminNewsNavbar from "../navbar/components/AdminNewsNavbar";
 import TemplateListDocuments from "./TemplateListDocuments";
 import { fetchDocuments, createDocument } from "../services/documentService";
-import { fetchArticles } from "../services/articleService";
+import { fetchArticles, createArticle } from "../services/articleService";
 import { v4 as uuidv4 } from "uuid";
 
 const PageDocuments = () => {
@@ -16,7 +16,6 @@ const PageDocuments = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fonction pour charger les documents et les articles
     const loadCounts = async () => {
       try {
         const [documents, articles] = await Promise.all([
@@ -74,9 +73,22 @@ const PageDocuments = () => {
     }
   };
 
-  const handleCreateArticle = () => {
-    // La fonction pour créer un article peut être ajoutée ici si nécessaire
-    console.log("Créer un article");
+  const handleCreateArticle = async () => {
+    try {
+      const newArticle = await createArticle({
+        title: "Untitled Article",
+        description: "Add Description",
+        components: [],
+      });
+
+      if (newArticle.id) {
+        navigate(`/articles/${newArticle.id}/edit`);
+      } else {
+        throw new Error("Article ID is missing");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la création de l'article", error);
+    }
   };
 
   return (
@@ -93,11 +105,11 @@ const PageDocuments = () => {
       <main className="main-content-commune">
         <div className="layout-content-commune">
           <div className="title-document-cont grid-column">
-            <div className="title-documents">Tous les documents</div>
+            <div className="title-documents">Liste des documents</div>
             <div className="numeric-documents">
               Vous avez créé{" "}
               <span className="documentCount">{documentCount} formulaires</span>{" "}
-              et <span className="articleCount">{articleCount} articles </span>
+              et <span className="articleCount">{articleCount} articles</span>
             </div>
           </div>
           <div className="actions-buttons-documents grid-column">

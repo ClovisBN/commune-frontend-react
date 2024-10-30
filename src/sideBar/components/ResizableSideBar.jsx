@@ -26,7 +26,7 @@ const ResizableSideBar = ({ children }) => {
         className="resize-handle"
         onMouseDown={handleMouseDown}
         style={{
-          width: "4px",
+          width: isCollapsed ? "0px" : "3px",
           cursor: "col-resize",
           zIndex: "99999",
         }}

@@ -63,13 +63,78 @@
 }
 
 /* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+/* styles.css ou le fichier CSS correspondant */
+.question-list {
+  margin: 0px 0px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.cont-question-gap {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  height: 24px;
+}
+
+.question-gap {
+  height: 24px;
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 24px;
+}
+
+@keyframes fadeInGrow {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.1) rotate(-45deg);
+    left: -45px;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-45deg);
+    left: -45px;
+  }
+}
+
 .add-question-button {
-  position: absolute;
-  padding: 10px 5px;
-  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: rgb(35, 131, 226);
+  flex-shrink: 0;
+  transform: rotate(45deg);
+}
+
+.cont-add-question-btn {
+  user-select: none;
+  transition: background 20ms ease-in;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 100% 100% 6px;
+  height: 32px;
+  width: 32px;
+  padding: 0px;
+  background: rgba(35, 131, 226, 0.14);
+  position: absolute;
+  left: -45px;
+  top: -5px;
   z-index: 1000;
-  transition: top 0.5s;
+  animation: fadeInGrow 0.2s ease;
+  transform: rotate(-45deg);
 }
 
 .separator-vertical {

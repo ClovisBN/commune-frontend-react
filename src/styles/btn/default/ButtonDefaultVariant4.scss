@@ -1,19 +1,40 @@
 @import "../../variables";
 
 .button-variant4 {
-  color: white;
-  width: 26px;
+  transition: background 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  position: relative;
   height: 26px;
-  margin: 1px 10px 1px 1px;
-  transition: background 0.25s;
-
+  width: 26px;
   &:hover {
-    background-color: $bg-secondary-color;
+    background: rgba(255, 255, 255, 0.1);
     // border-color: darken($primary-color, 10%);
   }
 }
 
-.button-variant4 button svg {
-  height: 26px;
-  width: 26px;
+.menu-svg {
+  opacity: 1;
+  transition: opacity 100ms ease;
+  position: absolute;
+  top: 4px;
+  right: 5px;
+}
+
+.menu-svg-hover {
+  opacity: 0;
+  transition: opacity 100ms ease;
+  position: absolute;
+  top: 4px;
+  right: 5px;
+}
+
+.button-variant4:hover .menu-svg-hover {
+  opacity: 1;
+}
+
+.button-variant4:hover .menu-svg {
+  opacity: 0;
 }

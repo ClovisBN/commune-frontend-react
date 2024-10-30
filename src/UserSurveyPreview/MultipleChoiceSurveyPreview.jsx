@@ -4,8 +4,8 @@ import React from "react";
 const MultipleChoiceSurveyPreview = ({ question }) => {
   return (
     <div className="multiple-choice-survey-answer">
-      <h3>{question.text}</h3>
-      <div>
+      <h3 className={question.isRequired ? "required" : ""}>{question.text}</h3>
+      <div className="cont-answare-survey">
         {question.options.map((option) => (
           <div className="option-answare">
             <svg

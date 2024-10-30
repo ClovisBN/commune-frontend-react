@@ -1,11 +1,7 @@
 import React from "react";
 import SideBar from "./SideBar";
 
-const userLinks = [
-  { label: "Documents", path: "/documents" },
-  { label: "News", path: "/News" },
-  { label: "Articles", path: "/articles" },
-];
+const userLinks = [{ label: "Documents", path: "/Documents" }];
 
 const SideBarUser = () => {
   return (

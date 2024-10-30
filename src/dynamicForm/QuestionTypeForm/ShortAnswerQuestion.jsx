@@ -1,10 +1,9 @@
 import React from "react";
-import InputField from "../../shared/components/InputComponents/InputField";
 
-const ShortAnswerQuestion = ({ question }) => {
+const ShortAnswerQuestion = ({ question, isDisabled = true }) => {
   return (
     <div className="short-answer-question">
-      <InputField type="text" placeholder="Short answer text" disabled />
+      <div className="prview-survey-question">Reponse courte</div>
     </div>
   );
 };

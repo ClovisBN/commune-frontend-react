@@ -32,8 +32,8 @@ const SurveyPreview = () => {
   if (!document) return <div>Document not found</div>;
 
   return (
-    <div className="survey-answer">
-      <div className="survey-cont-answer">
+    <div className="layout-content-commune container-scroll-element">
+      <div className="grid-column survey-cont-answer">
         <h1>{document.name}</h1>
         <p>{document.description}</p>
 

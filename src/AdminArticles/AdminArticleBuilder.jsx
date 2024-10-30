@@ -1,7 +1,11 @@
-// AdminArticleBuilder.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { createArticle } from "../services/articleService";
+import {
+  fetchArticleById,
+  createArticle,
+  updateArticle,
+} from "../services/articleService";
 import HeadingLevel1 from "./components/HeadingLevel1";
 import HeadingLevel2 from "./components/HeadingLevel2";
 import Paragraph from "./components/Paragraph";
@@ -19,7 +23,29 @@ const componentTypes = {
 };
 
 const AdminArticleBuilder = () => {
+  const { id } = useParams(); // Récupère l'ID de l'article depuis l'URL
+  const navigate = useNavigate();
   const [components, setComponents] = useState([]);
+  const [title, setTitle] = useState("Untitled Article");
+  const [description, setDescription] = useState("Description of the article");
+
+  useEffect(() => {
+    // Si un ID est présent, charger les données de l'article
+    const loadArticle = async () => {
+      if (id) {
+        try {
+          const article = await fetchArticleById(id);
+          setTitle(article.title);
+          setDescription(article.description);
+          setComponents(article.components || []);
+        } catch (error) {
+          console.error("Error fetching article:", error);
+        }
+      }
+    };
+
+    loadArticle();
+  }, [id]);
 
   const addComponent = (type) => {
     const newComponent = {
@@ -37,10 +63,9 @@ const AdminArticleBuilder = () => {
   };
 
   const handleSaveArticle = async () => {
-    // Structure de l'article à sauvegarder
     const newArticle = {
-      title: "Untitled Article",
-      description: "Description of the article",
+      title,
+      description,
       components: components.map((component) => ({
         id: component.id,
         type: component.type,
@@ -49,9 +74,15 @@ const AdminArticleBuilder = () => {
     };
 
     try {
-      await createArticle(newArticle);
-      setComponents([]); // Réinitialiser les composants après la sauvegarde
-      console.log("Article saved successfully");
+      if (id) {
+        // Si un ID est présent, mettre à jour l'article
+        await updateArticle(id, newArticle);
+        console.log("Article updated successfully");
+      } else {
+        // Sinon, créer un nouvel article
+        const createdArticle = await createArticle(newArticle);
+        navigate(`/articles/${createdArticle.id}/edit`);
+      }
     } catch (error) {
       console.error("Error saving article:", error);
     }
@@ -62,6 +93,17 @@ const AdminArticleBuilder = () => {
       <div className="layout-content-commune">
         <div className="grid-column">
           <h2>Article Builder</h2>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Article Title"
+          />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Article Description"
+          />
         </div>
         <div className="grid-column">
           {Object.keys(componentTypes).map((type) => (
@@ -79,7 +121,7 @@ const AdminArticleBuilder = () => {
           {components.map((component) => {
             const Component = componentTypes[component.type];
             return (
-              <div key={component.id} className=" article-component">
+              <div key={component.id} className="article-component">
                 <Component
                   content={component.content}
                   onChange={(content) => updateComponent(component.id, content)}
@@ -94,7 +136,7 @@ const AdminArticleBuilder = () => {
             className="button-default button-variant5"
             onClick={handleSaveArticle}
           >
-            Save Article
+            {id ? "Update Article" : "Save Article"}
           </button>
         </div>
       </div>

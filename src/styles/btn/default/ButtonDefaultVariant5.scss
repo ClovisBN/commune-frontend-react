@@ -20,13 +20,53 @@
 }
 
 .btn-delete {
-  background: #f1244c;
-  color: #ed6983;
-  border-color: #ed6983;
+  background: rgba(135, 131, 120, 0.15);
+  border-color: #eb5757;
+  padding: 0.2em 0.4em;
+  span {
+    color: #eb5757;
+  }
+  svg {
+    fill: #eb5757;
+  }
 }
 
 .btn-duplicate {
-  background: #246ff1;
-  color: #6993ed;
-  border-color: #6993ed;
+  background-color: rgba(120, 129, 135, 0.15);
+  border-color: #5786eb;
+  padding: 0.2em 0.4em;
+  span {
+    color: #5786eb;
+  }
+  svg {
+    fill: #5786eb;
+  }
 }
+
+.btn-required {
+  background-color: rgba(135, 132, 120, 0.15);
+  border-color: #ebbf57;
+  padding: 0.2em 0.4em;
+  span {
+    color: #ebbf57;
+  }
+  svg {
+    fill: #ebbf57;
+  }
+}
+
+// .numeric-documents .documentCount {
+//   background-color: rgba(120, 129, 135, 0.15);
+//   border-radius: 4px;
+//   color: #5786eb;
+//   padding: 0.2em 0.4em;
+//   font-size: 80%;
+// }
+
+// .numeric-documents .articleCount {
+//   background: rgba(135, 131, 120, 0.15);
+//   border-radius: 4px;
+//   color: #eb5757;
+//   padding: 0.2em 0.4em;
+//   font-size: 80%;
+// }

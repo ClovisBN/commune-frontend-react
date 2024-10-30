@@ -1,126 +1,32 @@
-import React, { useRef, useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { useParams, useNavigate } from "react-router-dom";
-import DraggableList from "../../shared/components/DraggableList";
-import SortableQuestion from "./SortableQuestion";
+// QuestionUI.js
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import useDocument from "../../hooks/useDocument";
 import InputField from "../../shared/components/InputComponents/InputField";
 import AddQuestionButton from "./AddQuestionButton";
-import { useScreenshot } from "../../hooks/useScreenshot";
+import UnifiedQuestion from "./UnifiedQuestion";
+import useQuestionActions from "./useQuestionActions"; // Importation du hook
 
 const QuestionUI = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { formRef, takeScreenshot } = useScreenshot();
-  const addButtonRef = useRef(null);
-  const [pendingAction, setPendingAction] = useState(null);
-  const [adjustedPosition, setAdjustedPosition] = useState(0);
+  const [hoveredGapIndex, setHoveredGapIndex] = useState(null);
+
   const {
     doc,
     setDoc,
     selectedQuestionId,
     setSelectedQuestionId,
     updateQuestions,
-  } = useDocument(id, navigate);
-
-  const addQuestion = () => {
-    const newQuestion = {
-      id: uuidv4(),
-      type: "multiple-choice",
-      text: "",
-      options: [
-        { id: uuidv4(), text: "Option 1" },
-        { id: uuidv4(), text: "Option 2" },
-      ],
-      isRequired: false,
-    };
-
-    updateQuestions((questions) => {
-      const selectedQuestionIndex = questions.findIndex(
-        (q) => q.id === selectedQuestionId
-      );
-      const insertIndex =
-        selectedQuestionIndex !== -1
-          ? selectedQuestionIndex + 1
-          : questions.length;
-      return [
-        ...questions.slice(0, insertIndex),
-        newQuestion,
-        ...questions.slice(insertIndex),
-      ];
-    });
-
-    setSelectedQuestionId(newQuestion.id);
-  };
-
-  const handleReorderQuestions = (newQuestions) => {
-    setDoc((prevState) => ({
-      ...prevState,
-      questions: newQuestions,
-    }));
-  };
-
-  const handleDeleteQuestion = (questionId) => {
-    setPendingAction({ type: "delete", questionId });
-  };
-
-  const handleDuplicateQuestion = (question) => {
-    setPendingAction({ type: "duplicate", question });
-  };
+  } = useDocument(id);
+  const { addQuestionAtIndex, handleDeleteQuestion, handleDuplicateQuestion } =
+    useQuestionActions(
+      selectedQuestionId,
+      setSelectedQuestionId,
+      updateQuestions
+    );
 
   useEffect(() => {
-    if (pendingAction) {
-      if (pendingAction.type === "delete") {
-        const { questionId } = pendingAction;
-
-        updateQuestions((questions) => {
-          const idx = questions.findIndex((q) => q.id === questionId);
-          const newQuestions = questions.filter((q) => q.id !== questionId);
-
-          if (selectedQuestionId === questionId) {
-            let newSelectedQuestionIndex = idx > 0 ? idx - 1 : 0;
-
-            if (newQuestions.length > 0) {
-              setSelectedQuestionId(newQuestions[newSelectedQuestionIndex].id);
-            } else {
-              setSelectedQuestionId(null);
-            }
-          }
-
-          return newQuestions;
-        });
-      } else if (pendingAction.type === "duplicate") {
-        const { question } = pendingAction;
-        const duplicatedQuestion = {
-          ...question,
-          id: uuidv4(),
-          options: question.options.map((opt) => ({ ...opt, id: uuidv4() })),
-        };
-
-        updateQuestions((questions) => {
-          const idx = questions.findIndex((q) => q.id === question.id);
-          const newQuestions = [
-            ...questions.slice(0, idx + 1),
-            duplicatedQuestion,
-            ...questions.slice(idx + 1),
-          ];
-
-          setSelectedQuestionId(duplicatedQuestion.id);
-          return newQuestions;
-        });
-      }
-
-      setPendingAction(null);
-    }
-  }, [
-    selectedQuestionId,
-    pendingAction,
-    updateQuestions,
-    setSelectedQuestionId,
-  ]);
-
-  useEffect(() => {
-    const currentFormRef = formRef.current;
+    const currentFormRef = document.querySelector(".container-scroll-element");
 
     const scrollToSelectedQuestion = () => {
       const selectedElement = document.getElementById(
@@ -148,44 +54,7 @@ const QuestionUI = () => {
     };
 
     scrollToSelectedQuestion();
-  }, [selectedQuestionId, formRef]);
-
-  useEffect(() => {
-    const currentFormRef = formRef.current;
-
-    const updateButtonPosition = () => {
-      const selectedElement = document.getElementById(
-        `question-${selectedQuestionId}`
-      );
-      if (selectedElement && currentFormRef) {
-        const rect = selectedElement.getBoundingClientRect();
-        const containerRect = currentFormRef.getBoundingClientRect();
-        const position =
-          rect.top -
-          containerRect.top +
-          selectedElement.offsetHeight / 2 -
-          20 +
-          currentFormRef.scrollTop;
-
-        const adjustedTop = Math.min(
-          Math.max(position, currentFormRef.scrollTop + 20),
-          currentFormRef.scrollTop + containerRect.height - 40
-        );
-
-        setAdjustedPosition(adjustedTop);
-      }
-    };
-
-    updateButtonPosition();
-
-    window.addEventListener("resize", updateButtonPosition);
-    currentFormRef?.addEventListener("scroll", updateButtonPosition);
-
-    return () => {
-      window.removeEventListener("resize", updateButtonPosition);
-      currentFormRef?.removeEventListener("scroll", updateButtonPosition);
-    };
-  }, [selectedQuestionId, formRef]);
+  }, [selectedQuestionId]);
 
   if (!doc) {
     return <div>Loading...</div>;
@@ -193,14 +62,13 @@ const QuestionUI = () => {
 
   return (
     <div
-      className="document-container container-scroll-element"
-      ref={formRef}
+      className="layout-content-commune container-scroll-element"
       style={{ position: "relative", overflowY: "auto" }}
     >
-      <div className="cont-form-doc">
+      <div className="grid-column cont-form-doc">
         <div className="survey-header-contnaire">
           <InputField
-            type="text"
+            type="textarea"
             name="documentName"
             value={doc.name}
             onChange={(e) => setDoc({ ...doc, name: e.target.value })}
@@ -216,37 +84,64 @@ const QuestionUI = () => {
             variant="variant3"
           />
         </div>
-        <DraggableList
-          items={doc.questions}
-          onItemsReordered={handleReorderQuestions}
-          renderItem={(question, index, dndProps) => (
-            <SortableQuestion
-              key={question.id}
-              question={question}
-              selectedQuestionId={selectedQuestionId}
-              setSelectedQuestionId={setSelectedQuestionId}
-              setDoc={setDoc}
-              handleDeleteQuestion={handleDeleteQuestion}
-              handleDuplicateQuestion={handleDuplicateQuestion}
-              {...dndProps}
-            />
-          )}
-        />
-        <AddQuestionButton
-          ref={addButtonRef}
-          onClick={addQuestion}
-          questionPosition={adjustedPosition}
-        />
+
+        {/* Affichage des questions avec gaps */}
+        <div className="question-list">
+          {/* Gap avant la première question */}
+          <div
+            className="question-gap"
+            onMouseEnter={() => setHoveredGapIndex(0)}
+            onMouseLeave={() => setHoveredGapIndex(null)}
+          >
+            <div className="cont-question-gap">
+              {hoveredGapIndex === 0 && (
+                <AddQuestionButton onClick={() => addQuestionAtIndex(0)} />
+              )}
+            </div>
+          </div>
+
+          {doc.questions.map((question, index) => (
+            <React.Fragment key={question.id}>
+              <div
+                id={`question-${question.id}`}
+                className={`question-wrapper ${
+                  selectedQuestionId === question.id ? "selected" : ""
+                }`}
+                onClick={() => setSelectedQuestionId(question.id)}
+              >
+                <UnifiedQuestion
+                  question={question}
+                  onChange={(updatedQuestion) =>
+                    setDoc((prevState) => ({
+                      ...prevState,
+                      questions: prevState.questions.map((q) =>
+                        q.id === updatedQuestion.id ? updatedQuestion : q
+                      ),
+                    }))
+                  }
+                  onDelete={() => handleDeleteQuestion(question.id)}
+                  onDuplicate={() => handleDuplicateQuestion(question)}
+                  isSelected={selectedQuestionId === question.id}
+                />
+              </div>
+              {/* Gap après chaque question */}
+              <div
+                className="question-gap"
+                onMouseEnter={() => setHoveredGapIndex(index + 1)}
+                onMouseLeave={() => setHoveredGapIndex(null)}
+              >
+                <div className="cont-question-gap">
+                  {hoveredGapIndex === index + 1 && (
+                    <AddQuestionButton
+                      onClick={() => addQuestionAtIndex(index + 1)}
+                    />
+                  )}
+                </div>
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
       </div>
-      <button onClick={() => takeScreenshot(doc, id, false, navigate)}>
-        Save
-      </button>
-      <button
-        onClick={() => takeScreenshot(doc, id, true, navigate)}
-        className="preview-button"
-      >
-        Preview Document
-      </button>
     </div>
   );
 };

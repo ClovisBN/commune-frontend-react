@@ -1,12 +1,25 @@
-import React, { createContext, useContext, useState } from "react";
+// SideBarProvider.js
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const SideBarContext = createContext();
 
 export const SideBarProvider = ({ children }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false); // Etat pour collapse
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Utiliser useEffect pour synchroniser avec le localStorage lors du premier rendu
+  useEffect(() => {
+    const savedCollapsedState = JSON.parse(
+      localStorage.getItem("sidebarCollapsed")
+    );
+    if (savedCollapsedState !== null) {
+      setIsCollapsed(savedCollapsedState);
+    }
+  }, []);
 
   const toggleSideBar = () => {
-    setIsCollapsed(!isCollapsed); // Basculer entre collapse et expand
+    const newIsCollapsed = !isCollapsed;
+    setIsCollapsed(newIsCollapsed);
+    localStorage.setItem("sidebarCollapsed", JSON.stringify(newIsCollapsed));
   };
 
   return (

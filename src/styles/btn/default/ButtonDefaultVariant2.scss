@@ -1,10 +1,6 @@
 @import "../../variables";
 
 .button-variant2 {
-  display: none;
-}
-
-.selected .button-variant2 {
   display: flex;
   background-color: none;
   color: white;
@@ -12,17 +8,18 @@
   padding: 5px;
 
   &:hover {
-    background-color: $bg-secondary-color;
+    background-color: $bg-tertiary-color;
     // border-color: darken($primary-color, 10%);
   }
 }
 
 .button-variant2 svg {
-  fill: #a2a0a2;
-  height: 16px;
-  width: 16px;
+  fill: none;
+  height: 14px;
+  width: 14px;
+  display: block;
 }
 
-.selected .button-variant2:hover svg {
-  fill: #ffffff;
+.option:hover .button-variant2 svg {
+  fill: rgba(255, 255, 255, 0.443);
 }

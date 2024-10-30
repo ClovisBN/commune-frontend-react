@@ -7,4 +7,42 @@
   padding: 0 20px;
   display: flex;
   flex-direction: column;
+  gap: 24px;
+}
+
+.survey-cont-answer h1 {
+  margin: 15px auto 0px auto;
+  max-width: 580px;
+  width: 100%;
+  font-size: 46px;
+  font-weight: 700;
+}
+
+.survey-cont-answer p {
+  margin: 0px auto;
+  max-width: 580px;
+  width: 100%;
+}
+
+.survey-cont-answer .cont-answare-survey {
+  margin: 10px 10px;
+}
+
+.prview-survey-question {
+  height: 38px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: rgba(255, 255, 255, 0.055) 0px 0px 0px 1px inset;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+  color: $font-secondary-color;
+}
+
+/* Ajoutez cette classe dans votre CSS global ou spécifique au composant */
+.required::after {
+  content: "*";
+  color: rgb(217, 48, 37);
+  font-size: 25px;
+  margin: 0 5px;
 }

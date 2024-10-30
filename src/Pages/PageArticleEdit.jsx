@@ -1,17 +1,17 @@
-// PageArticle.jsx
+// PageArticleEdit.jsx
 import React from "react";
 import Navbar from "../navbar/components/Navbar";
-import PageArticleBuilder from "../AdminArticles/AdminArticleBuilder";
+import AdminArticleBuilder from "../AdminArticles/AdminArticleBuilder";
 
-const PageArticle = () => {
+const PageArticleEdit = () => {
   return (
     <div className="page-documents">
       <Navbar />
       <main className="main-content-commune">
-        <PageArticleBuilder />
+        <AdminArticleBuilder />
       </main>
     </div>
   );
 };
 
-export default PageArticle;
+export default PageArticleEdit;

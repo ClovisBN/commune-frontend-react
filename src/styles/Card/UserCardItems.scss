@@ -66,17 +66,19 @@
   margin-bottom: 10px;
   font-size: 16px;
   font-weight: 900;
-  color: rgba(90, 90, 90, 255);
+  color: $font-secondary-color;
 }
 
 .card-part-bottom {
-  padding: 10px 16px 12px;
   width: 100%;
-  height: 100%;
+  min-height: 72px;
+  padding: 10px 16px 12px;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
+  flex-grow: 1;
 }
 
 .card-part-top {
@@ -99,4 +101,27 @@
   position: absolute;
   bottom: -14px;
   left: 16px;
+  fill: white;
+  fill-opacity: 0.445;
+}
+
+.card-part-bottom h3 {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  line-height: normal;
+  width: auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.card-part-bottom p {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.282);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

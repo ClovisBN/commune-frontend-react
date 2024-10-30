@@ -1,3 +1,4 @@
+// UnifiedQuestion.js
 import React from "react";
 import QuestionHeader from "./QuestionHeader";
 import QuestionFooter from "./QuestionFooter";
@@ -11,30 +12,26 @@ const UnifiedQuestion = ({
   onChange,
   onDelete,
   onDuplicate,
-  onToggleRequired,
   isSelected,
-  setActivatorNodeRef,
-  listeners,
 }) => {
+  // Fonction pour basculer l'état isRequired dans le JSON de la question
+  const toggleRequired = () => {
+    onChange({ ...question, isRequired: !question.isRequired });
+  };
+
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "auto",
-      }}
-    >
+    <div className="contanier-question-surveys">
       <QuestionHeader
         text={question.text}
         onTextChange={(text) => onChange({ ...question, text })}
-        setActivatorNodeRef={setActivatorNodeRef}
-        listeners={listeners}
+        isRequired={question.isRequired}
       />
 
       {question.type === "multiple-choice" && (
         <MultipleChoiceQuestion question={question} onChange={onChange} />
       )}
       {question.type === "short-answer" && (
-        <ShortAnswerQuestion question={question} />
+        <ShortAnswerQuestion question={question} onChange={onChange} />
       )}
       {question.type === "date" && (
         <DateQuestion question={question} onChange={onChange} />
@@ -46,10 +43,10 @@ const UnifiedQuestion = ({
       <QuestionFooter
         onDelete={onDelete}
         onDuplicate={onDuplicate}
-        onToggleRequired={onToggleRequired}
+        onToggleRequired={toggleRequired} // Passe toggleRequired ici
         isRequired={question.isRequired}
-        currentType={question.type} // Passer le type actuel de la question
-        onTypeChange={(type) => onChange({ ...question, type })} // Gestion du changement de type
+        currentType={question.type}
+        onTypeChange={(type) => onChange({ ...question, type })}
       />
     </div>
   );

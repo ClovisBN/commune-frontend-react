@@ -3,28 +3,36 @@
 .option {
   display: flex;
   align-items: center;
-  background-color: none;
-  border-radius: 8px;
-  height: 34px;
-  padding: 0px 6px;
-}
+  width: calc(100% + 16px);
+  margin-left: -8px;
+  padding: 2px 4px;
+  border-radius: 6px;
 
-.selected .option:hover {
-  .drag-handle {
-    visibility: visible;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.055);
   }
 }
 
-.option-dnd-svg {
-  fill: #a2a0a2;
-  stroke: #a2a0a2;
-  transition: fill 0.2s;
-  min-width: 16px;
-  cursor: grab;
+.sub-option {
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 0px 16px;
+  width: 100%;
 }
 
-.selected .drag-handle:target {
-  cursor: grabbing;
+.option input {
+  display: flex;
+  align-items: center;
+  border: none;
+  padding: 2px 3px 2px 0px;
+  width: 100%;
+  background: transparent;
+  font-size: inherit;
+  line-height: inherit;
+  max-width: 100%;
+  flex-grow: 1;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .option-sicle-checkBox-svg {
@@ -58,8 +66,10 @@
 }
 
 .multiple-choice-question {
-  padding: 25px 10px 25px 0px;
-  background-color: $bg-secondary-color;
+  background-color: $bg-primary-color;
+  border-radius: 0px 0px 10px 10px;
+  margin: 4px 0px 10px 0px;
+  width: 100%;
 }
 
 .drag-handle {

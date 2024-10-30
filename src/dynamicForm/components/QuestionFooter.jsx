@@ -1,3 +1,4 @@
+// QuestionFooter.js
 import React from "react";
 import ButtonDefault from "../../shared/components/ButtonComponents/ButtonDefault";
 import { HiMiniDocumentDuplicate } from "react-icons/hi2";
@@ -24,7 +25,7 @@ const QuestionFooter = ({
 
       <ButtonDefault
         onClick={onToggleRequired}
-        variant="variant5"
+        variant="variant5 btn-required"
         title="Toggle Required"
       >
         <div>

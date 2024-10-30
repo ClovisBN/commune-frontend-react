@@ -30,3 +30,8 @@
   align-items: center;
   justify-content: center;
 }
+
+textarea {
+  overflow-y: hidden;
+  resize: none;
+}

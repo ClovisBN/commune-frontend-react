@@ -1,15 +1,30 @@
 import React from "react";
 import BtnProfile from "./BtnProfile";
 import ResizableSideBar from "./ResizableSideBar";
+import { SideBarToggle } from "./SideBarToggle";
+import CreateSurveyButton from "../../shared/components/ButtonComponents/CreateSurveyButton";
 
 const SideBar = ({ links, user }) => {
   return (
     <ResizableSideBar>
       <div className="sidebare">
         <div className="top-link-content-Sidebar">
+          <div className="top-sidebar-accont-param">
+            <div className="top-btn-sidebar-item">
+              sdvsdv
+              <div className="cont-btn-top-sidebar">
+                <div className="sidebar-toggle">
+                  <SideBarToggle />
+                </div>
+                <div className="sidebar-create-document">
+                  <CreateSurveyButton />
+                </div>
+              </div>
+            </div>
+          </div>
           <ul className="top-btn-sidebar">
             {links.map((link, index) => (
-              <li key={index}>
+              <li className="top-btn-sidebar-item" key={index}>
                 <a href={link.path}>
                   {" "}
                   <svg viewBox="0 0 20 20">

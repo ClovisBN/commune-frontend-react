@@ -1,16 +1,14 @@
-// src/routes/AuthenticatedApp.jsx
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
 import AdminLayout from "../layout/AdminLayout";
 import PrivateRoute from "../shared/components/PrivateRoute";
-import Templates from "../Pages/Templates";
 import Documents from "../Pages/PageDocuments";
 import PageSurveyPreview from "../Pages/PageSurveyPreview";
 import PageSurveyEdit from "../Pages/PageSurveyEdit";
 import ProfileDetails from "../profile/components/ProfileDetails";
 import EditProfileForm from "../profile/components/EditProfileForm";
-import AdminArticleBuilder from "../Pages/PageArticle";
+import PageArticleEdit from "../Pages/PageArticleEdit";
 
 const AuthenticatedApp = () => {
   return (
@@ -20,14 +18,10 @@ const AuthenticatedApp = () => {
           {/* Survey */}
           <Route path="/survey/:id/preview" element={<PageSurveyPreview />} />
           <Route path="/survey/:id/edit" element={<PageSurveyEdit />} />
-
           {/* Article */}
-          <Route path="/articles" element={<AdminArticleBuilder />} />
-
+          <Route path="/articles/:id/edit" element={<PageArticleEdit />} />{" "}
           {/* Documents */}
-          <Route path="/documents" element={<Templates />} />
-          <Route path="/News" element={<Documents />} />
-
+          <Route path="/Documents" element={<Documents />} />
           {/* Profil */}
           <Route path="/profile" element={<ProfileDetails />} />
           <Route path="/profile/edit" element={<EditProfileForm />} />
