@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./Api";
 import { handleError } from "../shared/utils/errorHandler";
 
 // Fetch un document par ID

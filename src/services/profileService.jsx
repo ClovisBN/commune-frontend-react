@@ -1,5 +1,5 @@
 // src/profile/services/profileService.js
-import api from "./api";
+import api from "./Api";
 
 // Récupérer le profil de l'utilisateur connecté
 export const fetchProfileService = async () => {

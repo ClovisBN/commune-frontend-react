@@ -1,6 +1,6 @@
 // /auth/services/authService.js
 
-import api from "./api";
+import api from "./Api";
 import { handleError } from "../shared/utils/errorHandler";
 import axios from "axios";
 

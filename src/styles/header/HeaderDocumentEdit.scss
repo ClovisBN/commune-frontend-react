@@ -1,0 +1,21 @@
+@import "../variables.scss";
+
+.document-header-container-edit {
+  width: 100%;
+  max-width: 600px;
+  margin: 0px auto 25px auto;
+}
+
+.document-header-container-edit #documentTitle {
+  font-weight: bold;
+  line-height: 1.2;
+  font-size: 40px;
+  width: 100%;
+}
+
+.document-header-container-edit #documentDescription {
+  font-weight: 500;
+  color: $font-secondary-color;
+  width: 100%;
+  margin-top: 16px;
+}

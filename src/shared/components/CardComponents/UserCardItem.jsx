@@ -2,7 +2,12 @@
 import React from "react";
 
 const UserCardItem = ({ item, onView }) => {
-  // Déterminer l'icône en fonction du type de l'élément
+  // Fonction pour retourner le statut lisible
+  const getStatusLabel = (statusId) => {
+    if (statusId === 1) return "Non publié";
+    if (statusId === 2) return "Publié";
+    return "Indéfini";
+  };
 
   return (
     <div className="user-card-item" onClick={() => onView(item.id)}>
@@ -13,8 +18,10 @@ const UserCardItem = ({ item, onView }) => {
           </svg>
         </div>
         <div className="card-part-bottom">
-          <h3>{item.name || item.title}</h3>
-          <p>{item.description}</p>
+          <h3 className="card-documents-1-title">{item.name || item.title}</h3>
+          <p className="card-documents-1-statu">
+            {getStatusLabel(item.status_id)}
+          </p>
         </div>
       </div>
     </div>

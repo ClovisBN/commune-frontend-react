@@ -6,35 +6,36 @@
   width: 150px;
   height: 150px;
   overflow: hidden;
-  // border: 1px solid $bg-primary-color;
-  // outline: 0.5px solid black;
-  // box-shadow: 0px 5px 12px -8px black;
   cursor: pointer;
 
   &:hover {
     box-shadow: 0px 0px 0px 1px inset $bg-tertiary-color;
-    // background: linear-gradient(
-    //     217deg,
-    //     rgb(51 56 65 / 80%),
-    //     rgba(255, 0, 0, 0) 70.71%
-    //   ),
-    //   linear-gradient(127deg, rgb(34 84 190 / 80%), rgba(0, 255, 0, 0) 70.71%),
-    //   linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
-
-    // border-color: $border-secondary;
   }
 }
 
-.user-card-item h3 {
+.card-documents-1-title {
   font-size: 14px;
   font-weight: 700;
-  width: 100%;
+  line-height: normal;
+
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
-.user-card-item p {
+.card-documents-1-statu {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 12px;
   color: $font-secondary-color;
 }
+
+//-------------------------------
 
 .user-header-card-item .icon-and-title {
   display: flex;
@@ -63,10 +64,15 @@
 }
 
 .items-groups h4 {
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+
   font-size: 16px;
   font-weight: 900;
   color: $font-secondary-color;
+  margin-left: 8px;
 }
 
 .card-part-bottom {
@@ -105,23 +111,17 @@
   fill-opacity: 0.445;
 }
 
-.card-part-bottom h3 {
-  white-space: pre-wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
-  line-height: normal;
-  width: auto;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
+// .card-part-bottom p {
+//   font-size: 12px;
+//   line-height: 16px;
+//   color: rgba(255, 255, 255, 0.282);
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// }
 
-.card-part-bottom p {
-  font-size: 12px;
-  line-height: 16px;
-  color: rgba(255, 255, 255, 0.282);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.cont-group-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }

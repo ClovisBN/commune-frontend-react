@@ -1,0 +1,30 @@
+@import "../../variables.scss";
+
+.survey-cont-answer {
+  max-width: 770px;
+  width: 100%;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.prview-survey-question {
+  height: 38px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: rgba(255, 255, 255, 0.055) 0px 0px 0px 1px inset;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+  margin: 10px 0;
+  color: $font-secondary-color;
+}
+
+.required::after {
+  content: "*";
+  color: rgb(217, 48, 37);
+  font-size: 25px;
+  margin: 0 5px;
+}

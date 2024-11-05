@@ -4,12 +4,12 @@
   background: transparent;
   min-height: 44px;
   max-width: 100vw;
-  z-index: 100;
   user-select: none;
   display: flex;
   flex-direction: row;
   padding: 0 10px;
   background-color: $bg-primary-color;
+  z-index: 99;
 }
 
 .navbar-left {
@@ -59,10 +59,6 @@
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.resize-handle:hover {
-  background-color: $border-secondary;
 }
 
 .sidebar-toggle {

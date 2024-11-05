@@ -1,0 +1,17 @@
+@import "../variables";
+
+.document-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  border-top: 1px solid $border-primary;
+  width: calc(100% + 24px);
+
+  border-bottom-left-radius: $border-radius - 1px;
+  border-bottom-right-radius: $border-radius - 1px;
+  height: 40px;
+  padding: 0px 2px;
+  background-color: $bg-primary-color;
+  // display: none;
+}

@@ -3,7 +3,6 @@
 .btn-profile-container {
   width: 100%;
   bottom: 0px;
-  padding: 10px;
   left: 0;
   position: relative;
 }
@@ -11,21 +10,8 @@
 .btn-profile {
   display: flex;
   align-items: center;
-  padding: 10px;
   cursor: pointer;
-  background-color: $bg-secondary-color;
-  border: none;
   width: 100%;
-  outline: 1px solid $border-primary;
-  border-radius: $border-radius-medium;
-}
-
-.profile-icon {
-  width: 28px;
-  height: 28px;
-  background-color: orange;
-  border-radius: 50%;
-  margin-right: 10px;
 }
 
 .profile-info {
@@ -33,14 +19,6 @@
   flex-direction: column;
   flex-grow: 1;
   width: 20px;
-}
-
-.user-name {
-  color: white;
-  font-size: 10px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .user-email {
@@ -51,51 +29,108 @@
   overflow: hidden;
 }
 
-.arrow {
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  transition: transform 0.3s ease;
+.btn-profile .arrow {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  margin-left: 2px;
+  fill: rgba(255, 255, 255, 0.443);
 }
 
-.arrow.down {
-  border-top: 6px solid white;
-}
+// .btn-profile .down {
+//   border-top: 6px solid white;
+// }
 
-.arrow.up {
-  border-bottom: 6px solid white;
+.btn-profile .up {
+  rotate: 180deg;
 }
 
 .profile-options {
   position: absolute;
-  bottom: 100%; /* 4px au-dessus du bouton */
+  top: 30px; /* 4px au-dessus du bouton */
   left: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 10px 10px 0 10px;
+  width: 300px;
+  z-index: 99999999;
+  cursor: default;
+
+  outline: 1px solid $border-primary;
+  border-radius: $border-radius-medium;
+  background-color: rgb(37, 37, 37);
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.2) 0px 3px 6px, rgba(15, 15, 15, 0.4) 0px 9px 24px;
 }
 
 .cont-profile-options {
-  outline: 1px solid $border-primary;
-  border-radius: $border-radius-medium;
-  padding: 10px;
-  background-color: $bg-secondary-color;
+  padding: 4px;
+  width: 100%;
+}
+
+.account-info-bulle {
+  width: 100%;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.account-info-bulle {
+  font-size: 14px;
 }
 
 .option-btn {
   background: none;
-  color: white;
   border: none;
   padding: 5px 10px;
   margin: 1px 0;
   text-align: left;
   cursor: pointer;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
 }
 
 .option-btn:hover {
-  background-color: rgba(252, 252, 252, 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+//--------------------------------------------
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.profile-icon {
+  min-width: 20px;
+  min-height: 20px;
+
+  width: 20px;
+  height: 20px;
+
+  background-color: orange;
+  border-radius: 20%;
+  margin: 0 9px 0 8px;
 }

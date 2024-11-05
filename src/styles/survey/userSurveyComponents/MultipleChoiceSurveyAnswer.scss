@@ -1,0 +1,38 @@
+@import "../../variables.scss";
+
+.multiple-choice-survey-answer {
+  //   border: 1px solid $border-primary;
+  //   border-radius: 10px;
+  //   padding: 12px;
+  margin: 0px auto;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.multiple-choice-survey-answer h3 {
+  padding: 6px 0;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.option-answare {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-left: -8px;
+  cursor: pointer;
+}
+
+.option-answare svg {
+  margin-right: 10px;
+}
+
+.option-answare:hover {
+  background-color: $bg-quaternary-color;
+}

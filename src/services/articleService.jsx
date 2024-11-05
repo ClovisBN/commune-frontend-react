@@ -1,5 +1,5 @@
 // services/articleService.js
-import api from "./api";
+import api from "./Api";
 
 export const fetchArticles = async () => {
   const response = await api.get("/articles");

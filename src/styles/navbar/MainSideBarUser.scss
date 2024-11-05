@@ -8,13 +8,18 @@
 
 .sidebar {
   background-color: $bg-secondary-color;
-  border-right: 1px solid $border-primary;
+  box-shadow: rgba(255, 255, 255, 0.05) -1px 0px 0px 0px inset;
   display: flex;
   height: 100vh;
   flex: none;
-  z-index: 99;
+  z-index: 9999;
   justify-content: flex-end;
   position: relative;
+  user-select: none;
+}
+
+.resize-handle:hover {
+  background-color: $border-secondary !important;
 }
 
 .sub-sidebar {
@@ -31,12 +36,13 @@
 .resize-handle {
   position: absolute;
   top: 0;
-  right: -0.5px;
-  width: 4px;
+  right: 0.5px;
+  width: 2px;
   height: 100%;
   background-color: transparent;
   cursor: col-resize;
   position: absolute;
+  transition: background 150ms;
 }
 
 //-------------------------------------
@@ -66,6 +72,7 @@
   height: 30px;
   transition: background 0.15s;
   width: 100%;
+  cursor: pointer;
 }
 
 .top-btn-sidebar-item svg {

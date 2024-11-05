@@ -1,0 +1,18 @@
+@import "../../variables.scss";
+
+.cont-quote-preview {
+  display: flex;
+  flex-direction: row;
+}
+
+.quote-spacer {
+  width: 4px;
+  min-height: 100%;
+  border-radius: 2px;
+  background-color: $bg-quinary-color;
+  margin-right: 10px;
+}
+
+.quote-preview {
+  font-style: italic;
+}

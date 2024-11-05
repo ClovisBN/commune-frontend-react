@@ -114,7 +114,7 @@ const TemplateListDocuments = ({ filterType, sortOrder, groupBy }) => {
     if (item.type === "document") {
       navigate(`/survey/${item.id}/edit`);
     } else if (item.type === "article") {
-      navigate(`/articles/${item.id}/edit`);
+      navigate(`/article/${item.id}/edit`);
     }
   };
 
@@ -123,7 +123,7 @@ const TemplateListDocuments = ({ filterType, sortOrder, groupBy }) => {
   const groupedItems = groupItemsByDate(filteredItems, sortOrder, groupBy);
 
   return (
-    <div className="grid-column">
+    <div className="grid-column cont-group-card">
       {Object.keys(groupedItems).length > 0 ? (
         Object.keys(groupedItems).map((date) => (
           <div key={date} className="items-groups">

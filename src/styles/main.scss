@@ -8,6 +8,7 @@
 @import "./input/InputVariant1.scss";
 @import "./input/InputVariant2.scss";
 @import "./input/InputVariant3.scss";
+@import "./input/InputVariant4.scss";
 
 //----------------------------
 // Button
@@ -21,9 +22,15 @@
 
 @import "./btn/DropDown.scss";
 @import "./btn/ButtonSelect.scss";
-@import "./btn/BtnProfile.scss";
 @import "./btn/ButtonSave.scss";
 @import "./btn/ButtonPreview.scss";
+@import "./btn/ButtonEdit.scss";
+
+//----------------------------
+// Shared
+//----------------------------
+@import "./shared/AddComponents.scss";
+@import "./shared/DocumentStatusMessage.scss";
 
 //----------------------------
 // Card
@@ -42,48 +49,65 @@
 //----------------------------
 // adminSurveyComponents
 //----------------------------
-@import "./adminSurveyComponents/MultipleChoiceSurvey.scss";
-@import "./adminSurveyComponents/DateQuestionSurvey.scss";
-@import "./adminSurveyComponents/ShortAnswerQuestionSurvey.scss";
-@import "./adminSurveyComponents/TimeQuestionSurvey.scss";
+@import "./survey/adminSurveyComponents/MultipleChoiceSurvey.scss";
+@import "./survey/adminSurveyComponents/DateQuestionSurvey.scss";
+@import "./survey/adminSurveyComponents/ShortAnswerQuestionSurvey.scss";
+@import "./survey/adminSurveyComponents/TimeQuestionSurvey.scss";
 
-@import "./adminSurveyComponents/WrapperQuestionSurvey.scss";
-@import "./adminSurveyComponents/HeaderSurvey.scss";
-
-//----------------------------
-// userSurveyComponents
-//----------------------------
-@import "./userSurveyComponents/TemplateListDocuments.scss";
-@import "./userSurveyComponents/SurveyAnswer.scss";
-
-@import "./userSurveyComponents/DateQuestionSurveyAnswer.scss";
-@import "./userSurveyComponents/MultipleChoiceSurveyAnswer.scss";
-@import "./userSurveyComponents/ShortAnswerSurveyAnswer.scss";
-@import "./userSurveyComponents/TimeQuestionSurveyAnswer.scss";
+@import "./survey/adminSurveyComponents/WrapperQuestionSurvey.scss";
+@import "./survey/adminSurveyComponents/HeaderSurvey.scss";
 
 //----------------------------
 // userSurveyComponents
 //----------------------------
-@import "./adminArticleComponents/headingLevel1Article.scss";
-@import "./adminArticleComponents/headingLevel2Article.scss";
-@import "./adminArticleComponents/listArticle.scss";
-@import "./adminArticleComponents/paragraphArticle.scss";
-@import "./adminArticleComponents/quoteArticle.scss";
+@import "./survey/userSurveyComponents/TemplateListDocuments.scss";
+@import "./survey/userSurveyComponents/SurveyAnswer.scss";
+
+@import "./survey/userSurveyComponents/DateQuestionSurveyAnswer.scss";
+@import "./survey/userSurveyComponents/MultipleChoiceSurveyAnswer.scss";
+@import "./survey/userSurveyComponents/ShortAnswerSurveyAnswer.scss";
+@import "./survey/userSurveyComponents/TimeQuestionSurveyAnswer.scss";
+
+//----------------------------
+// adminArticleComponents
+//----------------------------
+@import "./article/adminArticleComponents/headingLevel1Article.scss";
+@import "./article/adminArticleComponents/headingLevel2Article.scss";
+@import "./article/adminArticleComponents/listArticle.scss";
+@import "./article/adminArticleComponents/paragraphArticle.scss";
+@import "./article/adminArticleComponents/quoteArticle.scss";
+@import "./article/adminArticleComponents/articleEdit.scss";
 // @import "./adminArticleComponents";
+
+//----------------------------
+// userSurveyComponents
+//----------------------------
+@import "./article/userArticleComponents/articlePreview.scss";
+@import "./article/userArticleComponents/headingLevel1Article.scss";
+@import "./article/userArticleComponents/headingLevel2Article.scss";
+@import "./article/userArticleComponents/listArticle.scss";
+@import "./article/userArticleComponents/paragraphArticle.scss";
+@import "./article/userArticleComponents/quoteArticle.scss";
+// @import "./survey/userArticleComponents";
 
 //----------------------------
 // header
 //----------------------------
 @import "./header/HeaderQuestionSurveyEdit.scss";
 @import "./header/HeaderQuestionSurveyView.scss";
+@import "./header/HeaderDocumentEdit.scss";
+@import "./header/HeaderDocumentPreview.scss";
 
 //----------------------------
 // footer
 //----------------------------
-@import "./footer/FooterQuestionSurveyEdit.scss";
+@import "./footer/documentFooter.scss";
 
 //----------------------------
 //----------------------------
+
+@import "./btn/BtnProfile.scss";
+
 //----------------------------
 //----------------------------
 //----------------------------
@@ -177,7 +201,7 @@ html {
 //   gap: 24px;
 // }
 
-.contanier-question-surveys {
+.container-unified-component {
   border-radius: $border-radius;
   border: 1px solid $border-primary;
   transition: border 0.2s;
@@ -191,7 +215,7 @@ html {
   align-items: center;
 }
 
-.question-wrapper:hover .contanier-question-surveys {
+.question-wrapper:hover .container-unified-component {
   border: 1px solid $border-secondary;
 }
 

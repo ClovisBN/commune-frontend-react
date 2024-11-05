@@ -1,14 +1,16 @@
+// AuthenticatedApp.js
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
 import AdminLayout from "../layout/AdminLayout";
 import PrivateRoute from "../shared/components/PrivateRoute";
 import Documents from "../Pages/PageDocuments";
-import PageSurveyPreview from "../Pages/PageSurveyPreview";
-import PageSurveyEdit from "../Pages/PageSurveyEdit";
+import PageSurveyPreview from "../Pages/PageSurvey/PageSurveyPreview";
+import PageSurveyEdit from "../Pages/PageSurvey/PageSurveyEdit";
 import ProfileDetails from "../profile/components/ProfileDetails";
 import EditProfileForm from "../profile/components/EditProfileForm";
-import PageArticleEdit from "../Pages/PageArticleEdit";
+import PageArticleEdit from "../Pages/PageArticle/PageArticleEdit";
+import PageArticlePreview from "../Pages/PageArticle/PageArticlePreview"; // Importer le composant de prévisualisation
 
 const AuthenticatedApp = () => {
   return (
@@ -19,9 +21,10 @@ const AuthenticatedApp = () => {
           <Route path="/survey/:id/preview" element={<PageSurveyPreview />} />
           <Route path="/survey/:id/edit" element={<PageSurveyEdit />} />
           {/* Article */}
-          <Route path="/articles/:id/edit" element={<PageArticleEdit />} />{" "}
+          <Route path="/article/:id/edit" element={<PageArticleEdit />} />
+          <Route path="/article/:id/preview" element={<PageArticlePreview />} />
           {/* Documents */}
-          <Route path="/Documents" element={<Documents />} />
+          <Route path="/documents" element={<Documents />} />
           {/* Profil */}
           <Route path="/profile" element={<ProfileDetails />} />
           <Route path="/profile/edit" element={<EditProfileForm />} />

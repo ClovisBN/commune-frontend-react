@@ -1,0 +1,22 @@
+@import "../../variables.scss";
+
+.survey-header-contnaire {
+  padding: 0 20px;
+  background-color: $bg-primary-color;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#documentDescription {
+  font-size: 16px;
+  margin: 10px auto;
+  width: 100%;
+}
+
+#documentName {
+  font-size: 46px;
+  font-weight: 700;
+  margin: 10px auto;
+  width: 100%;
+}

@@ -1,0 +1,30 @@
+@import "../variables.scss";
+
+.document-status-message {
+  max-width: 600px;
+  width: 100%;
+  background-color: $bg-secondary-color;
+  //   border: 1px solid $border-primary;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 12px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.document-status-message p {
+  margin: 10px 5px;
+  color: $font-secondary-color;
+  font-size: 14px;
+}
+
+.svg-private {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  fill: $font-secondary-color;
+}

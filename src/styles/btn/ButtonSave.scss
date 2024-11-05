@@ -24,3 +24,12 @@
   flex-direction: row;
   align-items: center;
 }
+
+.survey-actions svg {
+  margin-right: 10px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  fill: rgba(255, 255, 255, 0.81);
+}

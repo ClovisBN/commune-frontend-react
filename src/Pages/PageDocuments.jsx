@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../navbar/components/Navbar";
-import AdminNewsNavbar from "../navbar/components/AdminNewsNavbar";
+import Navbar from "../Navigation/navbar/components/Navbar";
+import AdminNewsNavbar from "../Navigation/navbar/components/DocumentsNavbar";
 import TemplateListDocuments from "./TemplateListDocuments";
 import { fetchDocuments, createDocument } from "../services/documentService";
 import { fetchArticles, createArticle } from "../services/articleService";
