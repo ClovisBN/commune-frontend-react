@@ -1,0 +1,17 @@
+@import "../variables.scss";
+
+.title-page-commune {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 900;
+  margin: 5px 0;
+}
+
+.svg-commune {
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: $font-secondary-color;
+  flex-shrink: 0;
+  margin-right: 6px;
+}

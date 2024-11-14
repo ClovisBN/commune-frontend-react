@@ -1,0 +1,100 @@
+@import "../variables.scss";
+
+.timeline-items {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0px;
+  gap: 15px;
+}
+
+.timeline-item-content {
+  background: $bg-secondary-color;
+  padding: 10px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 100px;
+}
+
+.timeline-item-content .content {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+}
+
+.timeline-item-content .gap-card-spacer {
+  background-color: $bg-quaternary-color;
+  height: 75px;
+  width: 1px;
+}
+
+.timeline-item-content .tag {
+  color: #fff;
+  background: rgb(43, 58, 89);
+  padding: 0.4em;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.timeline-item-content .tag-cont {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.timeline-item-content .date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $font-secondary-color;
+  min-width: 60px;
+  gap: 2px;
+}
+
+.timeline-item-content .date .month {
+  font-size: 16px;
+}
+
+.timeline-item-content .date .day {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.timeline-item-content .date .year {
+  font-size: 14px;
+}
+
+.timeline-item-content h2 {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 5px 0;
+}
+
+.timeline-item-content p {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.timeline-item-content button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #6a9fb5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.timeline-item-content button:hover {
+  background: #578a9b;
+}

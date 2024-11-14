@@ -7,7 +7,7 @@ const ArticlePreviewNavbar = () => {
   const { id } = useParams();
 
   const handleEdit = () => {
-    navigate(`/article/${id}/edit`);
+    navigate(`/admin/article/${id}/edit`);
   };
 
   return (

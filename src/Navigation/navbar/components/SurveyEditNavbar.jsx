@@ -7,11 +7,11 @@ const SurveyEditNavbar = () => {
   const { id } = useParams();
 
   const handleSave = () => {
-    navigate("/documents"); // Naviguer vers la page précédente après l'enregistrement
+    navigate("/admin/documents"); // Naviguer vers la page précédente après l'enregistrement
   };
 
   const handlePreview = () => {
-    navigate(`/survey/${id}/preview`);
+    navigate(`/admin/survey/${id}/preview`);
   };
 
   return (

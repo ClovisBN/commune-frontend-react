@@ -1,7 +1,7 @@
 // TemplateListDocuments.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchDocuments } from "../services/documentService";
+import { fetchSurveys } from "../services/surveyService";
 import { fetchArticles } from "../services/articleService";
 import UserCardItem from "../shared/components/CardComponents/UserCardItem";
 
@@ -74,25 +74,25 @@ const TemplateListDocuments = ({ filterType, sortOrder, groupBy }) => {
   useEffect(() => {
     const loadItems = async () => {
       try {
-        const [documents, articles] = await Promise.all([
-          fetchDocuments(),
+        const [surveys, articles] = await Promise.all([
+          fetchSurveys(),
           fetchArticles(),
         ]);
 
-        const documentsWithType = documents.map((doc) => ({
-          ...doc,
-          type: "document",
+        const surveysWithType = surveys.map((survey) => ({
+          ...survey,
+          type: "survey",
         }));
         const articlesWithType = articles.map((article) => ({
           ...article,
           type: "article",
         }));
 
-        const combinedItems = [...documentsWithType, ...articlesWithType];
+        const combinedItems = [...surveysWithType, ...articlesWithType];
         setItems(combinedItems);
         setFilteredItems(combinedItems);
       } catch (error) {
-        console.error("Error fetching documents and articles:", error);
+        console.error("Error fetching surveys and articles:", error);
       } finally {
         setLoading(false);
       }
@@ -111,10 +111,10 @@ const TemplateListDocuments = ({ filterType, sortOrder, groupBy }) => {
   }, [filterType, items]);
 
   const handleView = (item) => {
-    if (item.type === "document") {
-      navigate(`/survey/${item.id}/edit`);
+    if (item.type === "survey") {
+      navigate(`/admin/survey/${item.id}/edit`);
     } else if (item.type === "article") {
-      navigate(`/article/${item.id}/edit`);
+      navigate(`/admin/article/${item.id}/edit`);
     }
   };
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../Navigation/navbar/components/Navbar";
 import AdminNewsNavbar from "../Navigation/navbar/components/DocumentsNavbar";
 import TemplateListDocuments from "./TemplateListDocuments";
-import { fetchDocuments, createDocument } from "../services/documentService";
+import { fetchSurveys, createSurvey } from "../services/surveyService";
 import { fetchArticles, createArticle } from "../services/articleService";
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,18 +11,18 @@ const PageDocuments = () => {
   const [filterType, setFilterType] = useState("all");
   const [sortOrder, setSortOrder] = useState("newest");
   const [groupBy, setGroupBy] = useState("month");
-  const [documentCount, setDocumentCount] = useState(0);
+  const [surveyCount, setSurveyCount] = useState(0);
   const [articleCount, setArticleCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const loadCounts = async () => {
       try {
-        const [documents, articles] = await Promise.all([
-          fetchDocuments(),
+        const [surveys, articles] = await Promise.all([
+          fetchSurveys(),
           fetchArticles(),
         ]);
-        setDocumentCount(documents.length);
+        setSurveyCount(surveys.length);
         setArticleCount(articles.length);
       } catch (error) {
         console.error("Error fetching documents and articles:", error);
@@ -44,12 +44,12 @@ const PageDocuments = () => {
     setGroupBy(group);
   };
 
-  const handleCreateForm = async () => {
+  const handleCreateSurvey = async () => {
     try {
-      const newDocument = await createDocument({
-        name: "untitled-form",
-        description: "Add Description",
-        questions: [
+      const newSurvey = await createSurvey({
+        title_survey: "untitled-form",
+        description_survey: "Add Description",
+        content_survey: [
           {
             id: uuidv4(),
             type: "multiple-choice",
@@ -63,26 +63,26 @@ const PageDocuments = () => {
         ],
       });
 
-      if (newDocument.id) {
-        navigate(`/survey/${newDocument.id}/edit`);
+      if (newSurvey.id) {
+        navigate(`/admin/survey/${newSurvey.id}/edit`);
       } else {
-        throw new Error("Document ID is missing");
+        throw new Error("Survey ID is missing");
       }
     } catch (error) {
-      console.error("Erreur lors de la création du formulaire", error);
+      console.error("Erreur lors de la création du Survey", error);
     }
   };
 
   const handleCreateArticle = async () => {
     try {
       const newArticle = await createArticle({
-        title: "Untitled Article",
-        description: "Add Description",
-        components: [],
+        title_article: "Untitled Article",
+        description_article: "Add Description",
+        content_article: [{ id: uuidv4(), type: "paragraph", content: null }],
       });
 
       if (newArticle.id) {
-        navigate(`/articles/${newArticle.id}/edit`);
+        navigate(`/admin/article/${newArticle.id}/edit`);
       } else {
         throw new Error("Article ID is missing");
       }
@@ -105,17 +105,19 @@ const PageDocuments = () => {
       <main className="main-content-commune">
         <div className="layout-content-commune">
           <div className="title-document-cont grid-column">
-            <div className="title-documents">Liste des documents</div>
+            <div className="title-page-commune">Liste des documents</div>
             <div className="numeric-documents">
-              Vous avez créé{" "}
-              <span className="documentCount">{documentCount} formulaires</span>{" "}
+              Vous avez créé
+              <span className="documentCount">
+                {surveyCount} formulaires
+              </span>{" "}
               et <span className="articleCount">{articleCount} articles</span>
             </div>
           </div>
           <div className="actions-buttons-documents grid-column">
             <div className="cont-action-button">
               <button
-                onClick={handleCreateForm}
+                onClick={handleCreateSurvey}
                 className="action-button-document hover-action-survey"
               >
                 <div className="title-action-button">Créer un formulaire</div>

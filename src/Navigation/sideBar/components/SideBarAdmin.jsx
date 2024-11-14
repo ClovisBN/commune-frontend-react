@@ -2,8 +2,9 @@ import React from "react";
 import SideBar from "./SideBar";
 
 const adminLinks = [
-  { label: "Dashboard", path: "/admin/dashboard" },
-  { label: "Manage Users", path: "/admin/users" },
+  { label: "Documents", path: "/admin/documents" },
+  { label: "Utilisateurs", path: "/admin/users" },
+  { label: "Doléances", path: "/admin/grievances" },
 ];
 
 const SideBarAdmin = () => {

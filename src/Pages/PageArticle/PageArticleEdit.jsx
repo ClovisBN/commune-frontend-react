@@ -2,9 +2,9 @@
 import React from "react";
 import Navbar from "../../Navigation/navbar/components/Navbar";
 import ArticleEditNavbar from "../../Navigation/navbar/components/ArticleEditNavbar";
-import AdminArticleBuilder from "../../Article/ArticlesDynamic/ArticleComponents/AdminArticleBuilder";
+import AdminArticleBuilder from "../../core/Article/ArticlesDynamic/ArticleComponents/AdminArticleBuilder";
 import { useWindowWidth } from "../../hooks/useWindow"; // Importer le hook de largeur de fenêtre
-import ArticlePreview from "../../Article/ArticlePreview/ArticlePreview";
+import ArticlePreview from "../../core/Article/ArticlePreview/ArticlePreview";
 
 const PageArticleEdit = () => {
   const windowWidth = useWindowWidth();

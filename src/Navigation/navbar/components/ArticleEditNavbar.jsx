@@ -7,11 +7,11 @@ const ArticleEditNavbar = () => {
   const { id } = useParams();
 
   const handleSave = () => {
-    navigate("/documents"); // Naviguer vers la page précédente après l'enregistrement
+    navigate("/admin/documents"); // Naviguer vers la page précédente après l'enregistrement
   };
 
   const handlePreview = () => {
-    navigate(`/article/${id}/preview`);
+    navigate(`/admin/article/${id}/preview`);
   };
 
   return (

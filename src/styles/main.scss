@@ -31,7 +31,8 @@
 //----------------------------
 @import "./shared/AddComponents.scss";
 @import "./shared/DocumentStatusMessage.scss";
-
+@import "./shared/TextPage.scss";
+@import "./shared/TimeLine.scss";
 //----------------------------
 // Card
 //----------------------------
@@ -89,6 +90,11 @@
 @import "./article/userArticleComponents/paragraphArticle.scss";
 @import "./article/userArticleComponents/quoteArticle.scss";
 // @import "./survey/userArticleComponents";
+
+//----------------------------
+// user
+//----------------------------
+@import "./user/UserFilterBar.scss";
 
 //----------------------------
 // header

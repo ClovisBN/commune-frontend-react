@@ -7,7 +7,7 @@ const SurveyPreviewNavbar = () => {
   const { id } = useParams();
 
   const handleEdit = () => {
-    navigate(`/survey/${id}/edit`);
+    navigate(`/admin/survey/${id}/edit`);
   };
 
   return (

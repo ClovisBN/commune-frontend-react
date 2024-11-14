@@ -1,0 +1,122 @@
+@import "../variables.scss";
+
+.user-list-and-filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-list-sorting-filter-btn {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-list-sorting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 0;
+  height: 40px;
+  align-items: center;
+}
+
+.user-table {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+
+  td,
+  th {
+    border: 1px solid $border-tertiary;
+    height: 32px;
+    min-width: 100px;
+    max-width: 160px;
+    font-size: 14px;
+    padding: 5px 8px;
+
+    padding-left: 8px;
+    padding-right: 8px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  td:first-child,
+  th:first-child {
+    border-left: none;
+  }
+  td:last-child,
+  th:last-child {
+    border-right: none;
+  }
+}
+
+.th-user-preview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: $font-secondary-color;
+}
+
+.grievance-statue-open {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 0px;
+  max-width: 100%;
+  width: fit-content;
+
+  height: 20px;
+  border-radius: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-size: 14px;
+  line-height: 120%;
+  color: rgba(255, 255, 255, 0.804);
+  background: rgb(43, 89, 63);
+  margin: 0px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.grievance-statue-closed {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 0px;
+  max-width: 100%;
+  width: fit-content;
+  height: 20px;
+  border-radius: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-size: 14px;
+  line-height: 120%;
+  color: rgba(255, 255, 255, 0.804);
+  background: rgb(89, 43, 43);
+  margin: 0px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* Styles pour le modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}

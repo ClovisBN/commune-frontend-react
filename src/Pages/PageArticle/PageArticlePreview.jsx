@@ -2,7 +2,7 @@
 import React from "react";
 import Navbar from "../../Navigation/navbar/components/Navbar";
 import ArticlePreviewNavbar from "../../Navigation/navbar/components/ArticlePreviewNavbar";
-import ArticlePreview from "../../Article/ArticlePreview/ArticlePreview";
+import ArticlePreview from "../../core/Article/ArticlePreview/ArticlePreview";
 import { useWindowWidth } from "../../hooks/useWindow"; // Importer le hook de largeur de fenêtre
 
 const PageSurveyAnswar = () => {
